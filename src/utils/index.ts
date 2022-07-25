@@ -4,7 +4,9 @@ import { useGlobSetting } from '/@/hooks/setting';
 const globSetting = useGlobSetting();
 import { unref } from 'vue';
 import { isObject } from '/@/utils/is';
-
+import { SysUrlPrefix } from '/@/api/sysPrefix';
+import { Base64 } from 'js-base64';
+import { getTokenInfo } from '/@/utils/auth';
 export const noop = () => {};
 
 /**
@@ -43,7 +45,7 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
 
 export function openWindow(
   url: string,
-  opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean }
+  opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean },
 ) {
   const { target = '__blank', noopener = true, noreferrer = true } = opt || {};
   const feature: string[] = [];
@@ -103,7 +105,11 @@ export function getAttachmentUrl(url: string) {
     url.indexOf('http') < 0 &&
     url.indexOf('data:image/') < 0
   ) {
-    url = globSetting.urlPrefix + globSetting.apiUrl + url;
+    const token = getTokenInfo();
+    url = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + url;
+    if (token && Object.keys(token).length > 0) {
+      url = url + '?' + token['query_key'] + '=' + token['access_token'];
+    }
   }
   return url;
 }
@@ -113,7 +119,7 @@ export function getAttachmentUrl(url: string) {
  * @param {*} str
  */
 export function strToBase64(str: string) {
-  return window.btoa(unescape(encodeURIComponent(str)));
+  return Base64.encode(str);
 }
 
 /**
@@ -121,5 +127,5 @@ export function strToBase64(str: string) {
  * @param {*} base64
  */
 export function base64ToStr(base64: string) {
-  return decodeURIComponent(escape(window.atob(base64)));
+  return Base64.decode(base64);
 }

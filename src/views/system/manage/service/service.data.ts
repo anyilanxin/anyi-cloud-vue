@@ -1,14 +1,17 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { h } from 'vue';
 export const columns: BasicColumn[] = [
   {
     title: '服务名',
     dataIndex: 'serviceName',
+    fixed: 'left',
     width: 150,
   },
   {
     title: '服务编码',
     dataIndex: 'serviceCode',
+    fixed: 'left',
     width: 150,
   },
   {
@@ -30,14 +33,8 @@ export const columns: BasicColumn[] = [
   {
     title: '实例状态',
     dataIndex: 'serviceInstanceState',
-    width: 160,
+    width: 180,
     slots: { customRender: 'serviceInstanceState' },
-  },
-  {
-    title: '服务状态',
-    dataIndex: 'serviceState',
-    width: 90,
-    slots: { customRender: 'serviceState' },
   },
   {
     title: '聚合swagger',
@@ -50,12 +47,12 @@ export const columns: BasicColumn[] = [
   {
     title: '备注',
     dataIndex: 'remark',
-    width: 150,
+    width: 160,
   },
   {
     title: '创建人',
     dataIndex: 'createUserName',
-    width: 120,
+    width: 130,
   },
   {
     title: '创建时间',
@@ -64,8 +61,60 @@ export const columns: BasicColumn[] = [
     defaultSortOrder: 'descend',
     width: 160,
   },
+  {
+    title: '服务状态',
+    dataIndex: 'serviceState',
+    fixed: 'right',
+    width: 90,
+    slots: { customRender: 'serviceState' },
+  },
 ];
 
+export const columnsInstance: BasicColumn[] = [
+  {
+    title: 'Ip',
+    dataIndex: 'ip',
+    width: 140,
+  },
+  {
+    title: '端口',
+    dataIndex: 'port',
+    width: 90,
+  },
+  {
+    title: '健康状态',
+    dataIndex: 'healthy',
+    customRender: ({ record }) => {
+      return record.healthy + '';
+    },
+    width: 80,
+  },
+  {
+    title: '元数据',
+    dataIndex: 'metadata',
+    align: 'left',
+    width: 300,
+    customRender: ({ record }) => {
+      let meta = '';
+      if (record.metadata) {
+        const metadata = record.metadata;
+        for (const metaInfo in metadata) {
+          meta += metaInfo + '=' + metadata[metaInfo] + '<br/>';
+        }
+        meta = meta.substring(0, meta.lastIndexOf('<br/>'));
+      }
+      return h('div', {
+        innerHTML: meta,
+      });
+    },
+  },
+  {
+    title: '状态',
+    dataIndex: 'enabled',
+    slots: { customRender: 'enabled' },
+    width: 90,
+  },
+];
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'serviceName',
@@ -270,54 +319,73 @@ export const serviceFormSchema: FormSchema[] = [
   },
 ];
 
-export const systemFormSchema: FormSchema[] = [
-  {
-    field: 'urlName',
-    label: '接口名称',
-    component: 'Input',
-    required: true,
-  },
-  {
-    field: 'specialStatus',
-    label: '状态',
-    component: 'RadioButtonGroup',
-    required: true,
-    defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: '禁用', value: 0 },
-        { label: '启用', value: 1 },
-      ],
+export function createSystemFormSchema(enableUrlType) {
+  console.log('-----enableUrlType----11111---', enableUrlType.value);
+  const systemFormSchema: FormSchema[] = [
+    {
+      field: 'urlName',
+      label: '接口名称',
+      component: 'Input',
+      required: true,
     },
-  },
-  {
-    label: '接口地址',
-    field: 'url',
-    component: 'InputTextArea',
-  },
-  {
-    field: 'limitMethod',
-    label: '限制请求方法',
-    component: 'RadioButtonGroup',
-    required: true,
-    defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: '不限制', value: 0 },
-        { label: '限制', value: 1 },
-      ],
+    {
+      field: 'specialStatus',
+      label: '状态',
+      component: 'RadioButtonGroup',
+      required: true,
+      defaultValue: 0,
+      componentProps: {
+        options: [
+          { label: '禁用', value: 0 },
+          { label: '启用', value: 1 },
+        ],
+      },
     },
-  },
-  {
-    field: 'requestMethod',
-    label: '允许的请求方法',
-    component: 'Select',
-    slot: 'requestMethod',
-    ifShow: ({ values }) => values.limitMethod === 1,
-  },
-  {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
-  },
-];
+    {
+      field: 'specialUrlType',
+      label: '特殊url类型',
+      component: 'RadioButtonGroup',
+      required: true,
+      componentProps: () => {
+        return {
+          options: [
+            { label: '白名单', value: 1, disabled: enableUrlType.value == 2 },
+            { label: '黑名单', value: 2, disabled: enableUrlType.value == 1 },
+          ],
+        };
+      },
+    },
+    {
+      label: '接口地址',
+      field: 'url',
+      required: true,
+      component: 'InputTextArea',
+    },
+    {
+      field: 'limitMethod',
+      label: '限制请求方法',
+      component: 'RadioButtonGroup',
+      required: true,
+      defaultValue: 0,
+      componentProps: {
+        options: [
+          { label: '不限制', value: 0 },
+          { label: '限制', value: 1 },
+        ],
+      },
+    },
+    {
+      field: 'requestMethod',
+      label: '允许的请求方法',
+      component: 'Select',
+      slot: 'requestMethod',
+      ifShow: ({ values }) => values.limitMethod === 1,
+    },
+    {
+      label: '备注',
+      field: 'remark',
+      component: 'InputTextArea',
+    },
+  ];
+  return systemFormSchema;
+}

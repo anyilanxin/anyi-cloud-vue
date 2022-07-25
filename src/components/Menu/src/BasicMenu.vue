@@ -6,7 +6,7 @@
     :openKeys="getOpenKeys"
     :inlineIndent="inlineIndent"
     :theme="theme"
-    @openChange="handleOpenChange"
+    @open-change="handleOpenChange"
     :class="getMenuClass"
     @click="handleMenuClick"
     :subMenuOpenDelay="0.2"
@@ -64,7 +64,7 @@
         menuState,
         items,
         mode as any,
-        accordion
+        accordion,
       );
 
       const getIsTopMenu = computed(() => {
@@ -114,7 +114,7 @@
           () => props.items,
           () => {
             handleMenuChange();
-          }
+          },
         );
 
       async function handleMenuClick({ key }: { key: string; keyPath: string[] }) {
@@ -126,9 +126,6 @@
         emit('menuClick', key);
 
         isClickGo.value = true;
-        // const parentPath = await getCurrentParentPath(key);
-
-        // menuState.openKeys = [parentPath];
         menuState.selectedKeys = [key];
       }
 
@@ -137,7 +134,9 @@
           isClickGo.value = false;
           return;
         }
-        const path = (route || unref(currentRoute)).path;
+        const path =
+          (route || unref(currentRoute)).meta?.currentActiveMenu ||
+          (route || unref(currentRoute)).path;
         setOpenKeys(path);
         if (unref(currentActiveMenu)) return;
         if (props.isHorizontal && unref(getSplit)) {

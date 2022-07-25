@@ -14,7 +14,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './category.data';
-  import { insert, update } from '/@/api/modules/auth/rbac/rbacOrg';
+  import { insert, update } from '/@/api/modules/system/rbac/rbacOrg';
   const isUpdate = ref(true);
   const orgId = ref('');
   const emit = defineEmits(['success', 'register']);

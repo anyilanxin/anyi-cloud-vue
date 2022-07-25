@@ -1,6 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { selectOrgTreeList } from '/@/api/modules/auth/rbac/rbacOrg';
+import { selectOrgTreeList } from '/@/api/modules/system/rbac/rbacOrg';
 
 export const columns: BasicColumn[] = [
   {
@@ -69,9 +69,8 @@ export const formSchema: FormSchema[] = [
     label: '上级组织',
     component: 'ApiTreeSelect',
     componentProps: {
-      replaceFields: {
-        title: 'orgName',
-        key: 'orgId',
+      fieldNames: {
+        label: 'orgName',
         value: 'orgId',
       },
       api: getOrgTree,

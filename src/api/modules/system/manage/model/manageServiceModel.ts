@@ -1,11 +1,13 @@
 import { BasePageVo } from '/@/api/model/baseModel';
-
 export interface ValidServiceInfoDto {
   label: string;
   value: string;
   disabled: string;
 }
-
+export interface InstancePageVo extends BasePageVo {
+  serviceCode: string;
+  groupName: string;
+}
 export interface ManageServicePageVo extends BasePageVo {
   serviceCode: string;
   serviceName: string;
@@ -36,8 +38,7 @@ export interface ManageServicePageDto {
 }
 
 export interface ManageServiceVo {
-  swaggerTag: string;
-  swaggerDocUri: string;
+  swaggerConfigUrl: string;
   serviceCode: string;
   serviceName: string;
   isLoadBalancer: number;
@@ -76,6 +77,20 @@ export interface FilterInfo {
   specialUrlInfos: SpecialUrlInfo[];
 }
 
+export interface ServiceInstancePageDto {
+  instanceId: string;
+  ip: string;
+  port: number;
+  healthy: boolean;
+  enabled: boolean;
+  metadata: Object;
+}
+
+export interface NacosUpdateInstanceVo {
+  instanceId: string;
+  type: number;
+  serviceCode: string;
+}
 export interface ManageServiceFilterUrlDto {
   serviceId: string;
   swaggerTag: string;
@@ -99,8 +114,7 @@ export interface ManageServiceFilterUrlDto {
 
 export interface ManageServiceDto {
   serviceId: string;
-  swaggerTag: string;
-  swaggerDocUri: string;
+  swaggerConfigUrl: string;
   serviceCode: string;
   serviceName: string;
   isLoadBalancer: number;
@@ -115,9 +129,6 @@ export interface ManageServiceDto {
   remark: string;
   createUserName: string;
   createTime: string;
-  instanceNum: number;
-  healthyNum: number;
-  unhealthyNum: number;
 }
 
 export interface SystemStatDto {

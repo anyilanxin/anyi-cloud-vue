@@ -66,8 +66,8 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: 'skill full 后台管理系统',
-    signInDesc: '一个让人心动的后台管理系统',
+    signInTitle: '地有半亩，兰友半苗',
+    signInDesc: '人生就是在不断攀登，让一个个不可能成为可能',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 

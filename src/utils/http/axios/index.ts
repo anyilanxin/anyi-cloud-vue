@@ -3,23 +3,24 @@
 import type { AxiosResponse, AxiosRequestConfig } from 'axios';
 import type { RequestOptions, Result } from '/#/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
+import projectSetting from '/@/settings/projectSetting';
 import { VAxios } from './Axios';
-import { buildLongUUID } from '/@/utils/uuid';
+import { buildShortUUID } from '/@/utils/uuid';
 import { checkStatus } from './checkStatus';
 import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
-import { isString } from '/@/utils/is';
-import { getTokenInfo, setTokenInfo, getSecurityInfo } from '/@/utils/auth';
+import { isString, isArray } from '/@/utils/is';
+import { getTokenInfo } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { useLocale } from '/@/locales/useLocale';
 import { joinTimestamp, formatRequestDate } from './helper';
-
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
+const { getLocale } = useLocale();
 const { createMessage, createErrorModal, createSuccessModal, notification } = useMessage();
-
 /**
  * @description: 数据处理，方便区分多种处理方式
  */
@@ -29,7 +30,7 @@ const transform: AxiosTransform = {
    */
   transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { t } = useI18n();
-    const { isTransformResponse, isReturnNativeResponse } = options;
+    const { isTransformResponse, isReturnNativeResponse, successMessageMode } = options;
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
     if (isReturnNativeResponse) {
       return res;
@@ -52,6 +53,13 @@ const transform: AxiosTransform = {
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
+      if (successMessageMode === 'modal') {
+        createSuccessModal({ title: t('sys.api.infoTip'), content: message });
+      } else if (successMessageMode === 'message') {
+        createMessage.success(message);
+      } else if (successMessageMode === 'notification') {
+        notification.success({ message: t('sys.api.infoTip'), description: message });
+      }
       return data.data;
     }
 
@@ -70,10 +78,13 @@ const transform: AxiosTransform = {
 
     // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
+
     if (options.errorMessageMode === 'modal') {
-      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
+      createErrorModal({ title: t('sys.api.errorTip'), content: message });
     } else if (options.errorMessageMode === 'message') {
-      createMessage.error(timeoutMsg);
+      createMessage.error(message);
+    } else if (options.errorMessageMode === 'notification') {
+      notification.error({ message: t('sys.api.errorTip'), description: message });
     }
     throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
   },
@@ -120,15 +131,16 @@ const transform: AxiosTransform = {
         if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
           config.data = data;
           config.params = params;
-        } else {
-          // 非GET请求如果没有提供data，则将params视为data
-          config.data = params;
-          config.params = undefined;
         }
+        // else {
+        //   // 非GET请求如果没有提供data，则将params视为data
+        //   config.data = params;
+        //   config.params = undefined;
+        // }
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(
             config.url as string,
-            Object.assign({}, config.params, config.data)
+            Object.assign({}, config.params, config.data),
           );
         }
       } else {
@@ -142,7 +154,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 请求拦截器处理
    */
-  requestInterceptors: (config) => {
+  requestInterceptors: (config: any) => {
     // 请求之前处理config
     const token = getTokenInfo();
     if (
@@ -151,51 +163,18 @@ const transform: AxiosTransform = {
       (config as Recordable)?.requestOptions?.withToken !== false
     ) {
       // jwt token
-      config.headers[token.tokenHeaderKey] = token.tokenHeaderStartWith + token.token;
+      config.headers['Authorization'] = 'Bearer ' + token.access_token;
     }
-    // 处理添加请求序列
-    const securityInfo = getSecurityInfo();
-    if (securityInfo && Object.keys(securityInfo).length > 0) {
-      config.headers[securityInfo.serialNumberKey] = securityInfo.serialNumber;
-    }
-    config.headers['X-Request-Id'] = buildLongUUID() + '-' + new Date().getTime();
+    config.headers['X-Request-Id'] = buildShortUUID();
+    // 多语言后端支持
+    config.headers['Accept-Language'] = getLocale.value;
     return config;
   },
 
   /**
    * @description: 响应拦截器处理
    */
-  responseInterceptors: (res: any) => {
-    const { config, data } = res || {};
-    const { code, message } = data;
-    const successMessageMode = config?.requestOptions?.successMessageMode || 'none';
-    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'message';
-    const { t } = useI18n();
-    if (code == 0) {
-      const token = getTokenInfo();
-      if (token && Object.keys(token).length > 0) {
-        const newStrTokenInfo = res.headers[token.refreshTokenKey];
-        if (newStrTokenInfo) {
-          const newTokenInfo = JSON.parse(decodeURI(newStrTokenInfo));
-          setTokenInfo(newTokenInfo);
-        }
-      }
-      if (successMessageMode === 'modal') {
-        createSuccessModal({ title: t('sys.api.infoTip'), content: message });
-      } else if (successMessageMode === 'message') {
-        createMessage.success(message);
-      } else if (successMessageMode === 'notification') {
-        notification.success({ message: t('sys.api.infoTip'), description: message });
-      }
-    } else {
-      if (errorMessageMode === 'modal') {
-        createErrorModal({ title: t('sys.api.errorTip'), content: message });
-      } else if (errorMessageMode === 'message') {
-        createMessage.error(message);
-      } else if (errorMessageMode === 'notification') {
-        notification.error({ message: t('sys.api.errorTip'), description: message });
-      }
-    }
+  responseInterceptors: (res: AxiosResponse<any>) => {
     return res;
   },
 
@@ -230,7 +209,20 @@ const transform: AxiosTransform = {
     } catch (error) {
       throw new Error(error as string);
     }
-    checkStatus(error?.response?.status, response?.data?.message ?? '', errorMessageMode);
+    if (config.responseType == 'blob') {
+      const blob = new Blob([response.data], {
+        type: 'text/plain',
+      });
+      //将Blob 对象转换成字符串
+      const reader = new FileReader();
+      reader.readAsText(blob, 'utf-8');
+      reader.onload = function (_e) {
+        const data = JSON.parse(reader.result as string);
+        checkStatus(error?.response?.status, data.message ?? '', errorMessageMode);
+      };
+    } else {
+      checkStatus(error?.response?.status, response?.data?.message ?? '', errorMessageMode);
+    }
     return Promise.reject(error);
   },
 };
@@ -279,8 +271,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           withToken: true,
         },
       },
-      opt || {}
-    )
+      opt || {},
+    ),
   );
 }
 
@@ -313,6 +305,25 @@ function setQueryParam(config: AxiosRequestConfig) {
   config.params = newQueryParam;
   return config;
 }
+
+/**
+ *  获取url地址中的参数并转为json
+ * @param url 地址
+ * @returns 解析后参数
+ */
+function urlParamToJson(url: string) {
+  const index = url.indexOf('?');
+  const obj = {};
+  if (url.indexOf('?') >= 0) {
+    const datas = url.substring(index + 1, url.length).split('&');
+    for (const item of datas) {
+      const data = item.split('=');
+      obj[data[0]] = data[1];
+    }
+  }
+  return obj;
+}
+
 /**
  *
  * 处理restfull风格参数
@@ -334,14 +345,16 @@ function setRestfullParam(config: AxiosRequestConfig) {
     }
     // 在处理data中的参数
     const data = config.data || false;
-    if (Reflect.has(config, 'data') && data && !isString(data)) {
-      Object.keys(data).forEach((key) => {
-        const regexp = new RegExp(`\{${key}\}`);
-        if (regexp.test(url!)) {
-          url = url.replace(regexp, data[key]);
-          Reflect.deleteProperty(data, key);
-        }
-      });
+    if (Reflect.has(config, 'data') && data && !isString(data) && !isArray(data)) {
+      if (!isArray(data)) {
+        Object.keys(data).forEach((key) => {
+          const regexp = new RegExp(`\{${key}\}`);
+          if (regexp.test(url!)) {
+            url = url.replace(regexp, data[key]);
+            Reflect.deleteProperty(data, key);
+          }
+        });
+      }
       config.data = data;
     }
   }

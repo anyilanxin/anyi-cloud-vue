@@ -4,18 +4,6 @@ for (let i = 0; i <= 15; i++) {
 }
 
 export function buildUUID(): string {
-  return buildLongUUID().replace(/-/g, '');
-}
-
-let unique = 0;
-export function buildShortUUID(prefix = ''): string {
-  const time = Date.now();
-  const random = Math.floor(Math.random() * 1000000000);
-  unique++;
-  return prefix + '_' + random + unique + String(time);
-}
-
-export function buildLongUUID() {
   let uuid = '';
   for (let i = 1; i <= 36; i++) {
     if (i === 9 || i === 14 || i === 19 || i === 24) {
@@ -28,5 +16,13 @@ export function buildLongUUID() {
       uuid += hexList[(Math.random() * 16) | 0];
     }
   }
-  return uuid;
+  return uuid.replace(/-/g, '');
+}
+
+let unique = 0;
+export function buildShortUUID(prefix = ''): string {
+  const time = Date.now();
+  const random = Math.floor(Math.random() * 1000000000);
+  unique++;
+  return prefix + '_' + random + unique + String(time);
 }

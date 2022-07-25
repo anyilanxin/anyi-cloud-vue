@@ -47,14 +47,12 @@ export interface UserInfo {
 }
 
 export interface TokenInfo {
-  token: string;
-  validityInSeconds: number;
-  expiresAt: string;
-  tokenHeaderKey: string;
-  tokenHeaderStartWith: string;
-  tokenType: string;
-  tokenQueryKey: string;
-  refreshTokenKey: string;
+  access_token: string;
+  refresh_token: string;
+  endpoint: string;
+  scope: string;
+  token_type: string;
+  expires_in: number;
 }
 
 export interface WebSecurityModel {

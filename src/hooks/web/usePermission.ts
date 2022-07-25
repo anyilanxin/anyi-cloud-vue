@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { RouteRecordRaw } from 'vue-router';
 
 import { useAppStore } from '/@/store/modules/app';
@@ -56,37 +57,121 @@ export function usePermission() {
   /**
    * Determine whether there is permission
    */
-  function hasPermission(value?: RoleEnum | RoleEnum[] | string | string[], def = true): boolean {
-    // Visible by default
+  function hasPermission(value?: string, def = true): boolean {
     if (!value) {
       return def;
     }
     // 如果是超级管理员则拥有所有权限直接放行
     const superRoleCode = projectSetting.superRoleCode;
-    const roleCodes = userStore.getUserInfo.roleCodes as string[];
+    const roleCodes = userStore.getRoleList as string[];
     if (roleCodes && roleCodes.length > 0) {
       if (roleCodes.includes(superRoleCode)) {
         return def;
       }
     }
-    const permMode = projectSetting.permissionMode;
-    if ([PermissionModeEnum.ROUTE_MAPPING, PermissionModeEnum.ROLE].includes(permMode)) {
-      if (!isArray(value)) {
-        return userStore.getRoleList?.includes(value as RoleEnum);
-      }
-      return (intersection(value, userStore.getRoleList) as RoleEnum[]).length > 0;
+    const routerInfo = router.currentRoute.value?.name;
+    if (!routerInfo) {
+      return true;
     }
-    if (PermissionModeEnum.BACK === permMode) {
-      const allCodeList = router.currentRoute.value?.meta?.actionSet as string[];
-      // const allCodeList = permissionStore.getPermCodeList as string[];
-      if (!isArray(value)) {
-        return allCodeList.includes(value);
-      }
-      return (intersection(value, allCodeList) as string[]).length > 0;
+    const actionInfo = appStore.getActionInfo || {};
+    if (!actionInfo || Object.keys(actionInfo).length <= 0) {
+      return true;
     }
+    const permissionExpression = actionInfo[routerInfo]?.[value];
+    if (!permissionExpression) {
+      return true;
+    }
+    const checkResult = eval(permissionExpression);
+    return checkResult;
+  }
+  /**
+   * 含有某个角色
+   */
+  // eslint-disable-next-line no-unused-vars
+  function hasRole(value?: string) {
+    console.log('---hasRole--value--------', value);
+    if (!value) {
+      return true;
+    }
+    const roleCodes = userStore.getRoleList as string[];
+    if (roleCodes.length <= 0) {
+      return false;
+    }
+    return roleCodes.includes(value);
+  }
+  /**
+   * 拥有任意一个角色
+   */
+  // eslint-disable-next-line no-unused-vars
+  function hasAnyRole(value?: string) {
+    console.log('-----value----1111---', value);
+    if (!value) {
+      return true;
+    }
+    const roles = value.split(',');
+    const roleCodes = userStore.getRoleList as string[];
+    if (roleCodes.length <= 0) {
+      return false;
+    }
+    return (intersection(roles, roleCodes) as string[]).length > 0;
+  }
+  /**
+   * 含有某个权限
+   */
+  // eslint-disable-next-line no-unused-vars
+  function hasAuthority(value?: string) {
+    if (!value) {
+      return true;
+    }
+    const allCodeList = (router.currentRoute.value?.meta?.actionSet || []) as string[];
+    if (allCodeList.length <= 0) {
+      return false;
+    }
+    return allCodeList.includes(value);
+  }
+  /**
+   * 拥有任意一个权限
+   */
+  // eslint-disable-next-line no-unused-vars
+  function hasAnyAuthority(value?: string) {
+    if (!value) {
+      return true;
+    }
+    const authoritys = value.split(',');
+    const allCodeList = (router.currentRoute.value?.meta?.actionSet || []) as string[];
+    if (allCodeList.length <= 0) {
+      return false;
+    }
+    return (intersection(authoritys, allCodeList) as string[]).length > 0;
+  }
+  /**
+   * 所有可访问
+   */
+  // eslint-disable-next-line no-unused-vars
+  function permitAll() {
     return true;
   }
-
+  /**
+   * 拒绝访问
+   */
+  // eslint-disable-next-line no-unused-vars
+  function denyAll() {
+    return false;
+  }
+  /**
+   * 匿名可访问
+   */
+  // eslint-disable-next-line no-unused-vars
+  function isAnonymous() {
+    return true;
+  }
+  /**
+   * 授权后可访问
+   */
+  // eslint-disable-next-line no-unused-vars
+  function isAuthenticated() {
+    return true;
+  }
   /**
    * Change roles
    * @param roles

@@ -17,4 +17,4 @@ export const kickOut = (loginUnique: string) =>
  * @description: 获取图片验证码
  */
 export const getPictureCode = () =>
-  defHttp.get<ValidateDto>({ url: SysUrlPrefix.AUTH + '/common/get/code/picture' });
+  defHttp.get<ValidateDto>({ url: SysUrlPrefix.AUTH + '/code/picture' });

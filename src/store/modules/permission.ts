@@ -23,7 +23,7 @@ import { filter } from '/@/utils/helper/treeHelper';
 
 // import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
-import { getRouterInfo } from '/@/api/modules/sys/webLoginCenter';
+import { getRouterInfoTree } from '/@/api/modules/sys/webLoginCenter';
 interface PermissionState {
   // Permission code list
   permCodeList: string[] | number[];
@@ -147,7 +147,7 @@ export const usePermissionStore = defineStore({
         }
         return;
       };
-
+      console.log('-----permissionMode---------', permissionMode);
       switch (permissionMode) {
         case PermissionModeEnum.ROLE:
           routes = filter(asyncRoutes, routeFilter);
@@ -186,7 +186,7 @@ export const usePermissionStore = defineStore({
             // this.changePermissionCode();
             // 加载路由前获取用户信息
             await userStore.getUserAndAuth();
-            routeList = (await getRouterInfo(projectSetting.systemCode)) as AppRouteRecordRaw[];
+            routeList = (await getRouterInfoTree(projectSetting.systemCode)) as AppRouteRecordRaw[];
           } catch (error) {
             console.error(error);
           }

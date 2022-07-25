@@ -21,6 +21,7 @@ import {
   Checkbox,
   Tag,
   Tabs,
+  Spin,
   Form,
   Affix,
   Tooltip,
@@ -69,6 +70,7 @@ export function registerGlobComp(app: App) {
     .use(Divider)
     .use(Affix)
     .use(Modal)
+    .use(Spin)
     .use(Descriptions)
     .use(Avatar);
 }

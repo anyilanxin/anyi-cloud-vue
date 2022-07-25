@@ -18,21 +18,27 @@ export default {
       totalField: 'total',
     },
     // Number of pages that can be selected
-    pageSizeOptions: ['10', '50', '80', '100', '500', '900'],
+    pageSizeOptions: ['5', '10', '20', '30', '40'],
     // Default display quantity on one page
     defaultPageSize: 10,
+    // Default Size
+    defaultSize: 'middle',
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
       const { field, order } = sortInfo;
-      if (order && order === 'ascend') {
-        return {
-          ascs: [field],
-        };
-      }
-      if (order && order === 'descend') {
-        return {
-          descs: [field],
-        };
+      if (field && order) {
+        if (order && order === 'ascend') {
+          return {
+            ascs: [field],
+          };
+        }
+        if (order && order === 'descend') {
+          return {
+            descs: [field],
+          };
+        }
+      } else {
+        return {};
       }
     },
     // Custom general filter function

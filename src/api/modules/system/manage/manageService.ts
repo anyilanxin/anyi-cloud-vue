@@ -1,13 +1,16 @@
 import { defHttp } from '/@/utils/http/axios';
 import { SysUrlPrefix } from '/@/api/sysPrefix';
+import { SuccessMessageMode } from '/#/axios';
 import {
   ValidServiceInfoDto,
+  InstancePageVo,
   ManageServicePageVo,
   ManageServicePageDto,
   ManageServiceVo,
   ManageServiceDto,
+  NacosUpdateInstanceVo,
+  ServiceInstancePageDto,
   SystemStatDto,
-  ManageServiceFilterUrlDto,
 } from './model/manageServiceModel';
 import { PageDto } from '/@/api/model/baseModel';
 
@@ -20,6 +23,15 @@ export const getValidServiceInfo = () =>
   });
 
 /**
+ * @description: 手动刷新网关
+ */
+export const syncGateway = (mode: SuccessMessageMode = 'notification') =>
+  defHttp.get<String>(
+    { url: SysUrlPrefix.SYSTEM + '/manage-service//refresh-gateway' },
+    { successMessageMode: mode }
+  );
+
+/**
  * @description: 分页查询
  */
 export const selectPage = (data: ManageServicePageVo) =>
@@ -29,21 +41,33 @@ export const selectPage = (data: ManageServicePageVo) =>
   });
 
 /**
+ * @description: 分页查询实例
+ */
+export const selectInstancePage = (data: InstancePageVo) =>
+  defHttp.post<PageDto<ServiceInstancePageDto>>({
+    url: SysUrlPrefix.SYSTEM + '/manage-service/select-instance/page',
+    data,
+  });
+
+/**
+ * @description: 实例上下线
+ */
+export const updateInstance = (data: NacosUpdateInstanceVo) =>
+  defHttp.post<String>(
+    {
+      url: SysUrlPrefix.SYSTEM + '/manage-service/update/service-instance',
+      data,
+    },
+    { successMessageMode: 'notification' }
+  );
+
+/**
  * @description: 新增
  */
 export const insert = (data: ManageServiceVo) =>
   defHttp.post<String>({
     url: SysUrlPrefix.SYSTEM + '/manage-service/insert',
     data,
-  });
-
-/**
- * @description: 获取服务器过滤器信息以及特殊url信息
- */
-export const selectServiceFilterInfo = (serviceId: string) =>
-  defHttp.get<ManageServiceFilterUrlDto>({
-    url: SysUrlPrefix.SYSTEM + '/manage-service/select/filter-url/{serviceId}',
-    params: { serviceId },
   });
 
 /**
@@ -68,10 +92,13 @@ export const getById = (serviceId: string) =>
  * @description: 逻辑删除
  */
 export const deleteById = (serviceId: string) =>
-  defHttp.delete<string>({
-    url: SysUrlPrefix.SYSTEM + '/manage-service/delete/{serviceId}',
-    params: { serviceId },
-  });
+  defHttp.delete<string>(
+    {
+      url: SysUrlPrefix.SYSTEM + '/manage-service/delete/{serviceId}',
+      params: { serviceId },
+    },
+    { successMessageMode: 'notification' }
+  );
 
 /**
  * @description: 获取系统统计

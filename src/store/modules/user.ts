@@ -2,12 +2,12 @@ import type { UserInfo } from '/#/store';
 import type { ErrorMessageMode } from '/#/axios';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
-import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { loginPicture } from '/@/api/modules/sys/webLogin';
-import { LoginPicture, TokenInfo } from '/@/api/modules/sys/model/webLoginModel';
+import { LoginPicture } from '/@/api/modules/sys/model/webLoginModel';
+import { TokenInfo } from 'types/store';
 import { getUserInfo } from '/@/api/modules/sys/webLoginCenter';
 import { loginOut } from '/@/api/modules/sys/loginCommon';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -20,7 +20,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 interface UserState {
   userInfo: Nullable<UserInfo>;
   tokenInfo: Nullable<TokenInfo>;
-  roleList: RoleEnum[];
+  roleList: string[];
   sessionTimeout?: boolean;
 }
 
@@ -46,17 +46,17 @@ export const useUserStore = defineStore({
     },
     getToken(): string {
       if (this.tokenInfo && Object.keys(this.tokenInfo).length > 0) {
-        return this.tokenInfo.token;
+        return this.tokenInfo.access_token;
       } else {
         const tokenInfo = getAuthCache<TokenInfo>(TOKEN_KEY);
         if (tokenInfo && Object.keys(tokenInfo).length > 0) {
-          return tokenInfo.token;
+          return tokenInfo.access_token;
         }
         return '';
       }
     },
-    getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+    getRoleList(): string[] {
+      return this.roleList.length > 0 ? this.roleList : getAuthCache<string[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -67,7 +67,7 @@ export const useUserStore = defineStore({
       this.tokenInfo = info;
       setAuthCache(TOKEN_KEY, info);
     },
-    setRoleList(roleList: RoleEnum[]) {
+    setRoleList(roleList: string[]) {
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
     },
@@ -131,6 +131,7 @@ export const useUserStore = defineStore({
       // 获取用户信息
       const userInfo = await getUserInfo();
       this.setUserInfo(userInfo);
+      this.setRoleList(userInfo?.roleCodes || []);
       // 获取权限信息
       return userInfo;
     },
@@ -139,12 +140,14 @@ export const useUserStore = defineStore({
      */
     async logout(goLogin = false) {
       try {
-        await loginOut();
+        loginOut();
       } catch {
         console.log('注销Token失败');
       }
-      this.setTokenInfo(null);
-      this.setSessionTimeout(false);
+      setTimeout(() => {
+        this.setTokenInfo(null);
+        this.setSessionTimeout(false);
+      }, 0);
       const fullPath = router.currentRoute.value.fullPath;
       if (fullPath !== PageEnum.BASE_LOGIN) {
         goLogin &&

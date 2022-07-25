@@ -14,6 +14,7 @@
         <CountdownInput
           size="large"
           class="fix-auto-fill"
+          autocomplete="off"
           v-model:value="formData.sms"
           :placeholder="t('sys.login.smsCode')"
         />

@@ -7,8 +7,8 @@
             <a-input
               :class="`${prefixCls}-input`"
               :placeholder="t('common.searchText')"
-              ref="inputRef"
               size="large"
+              ref="inputRef"
               allow-clear
               @change="handleSearch"
             >
@@ -106,7 +106,7 @@
         nextTick(() => {
           unref(inputRef)?.focus();
         });
-    }
+    },
   );
 
   function handleClose() {
@@ -126,7 +126,7 @@
     width: 100%;
     height: 100%;
     padding-top: 50px;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgb(0 0 0 / 25%);
     justify-content: center;
 
     &--mobile {
@@ -160,7 +160,7 @@
 
         &__item {
           &-enter {
-            opacity: 0 !important;
+            opacity: 0% !important;
           }
         }
       }
@@ -169,16 +169,16 @@
     &-content {
       position: relative;
       width: 632px;
-      margin: 0 auto auto auto;
+      margin: 0 auto auto;
       background-color: @component-background;
       border-radius: 6px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
       flex-direction: column;
     }
 
     &-input__wrapper {
       display: flex;
-      padding: 14px 14px 0 14px;
+      padding: 14px 14px 0;
       justify-content: space-between;
       align-items: center;
     }
@@ -246,7 +246,7 @@
           background-color: @primary-color;
 
           .@{prefix-cls}-list__item-enter {
-            opacity: 1;
+            opacity: 100%;
           }
         }
 
@@ -260,7 +260,7 @@
 
         &-enter {
           width: 30px;
-          opacity: 0;
+          opacity: 0%;
         }
       }
     }

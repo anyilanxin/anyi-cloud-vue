@@ -144,10 +144,6 @@
       height: 100%;
     }
 
-    .ant-layout-sider-children {
-      height: 101% !important;
-    }
-
     &--mix {
       top: @header-height;
       height: calc(100% - @header-height);

@@ -30,7 +30,8 @@
         size="large"
         class="fix-auto-fill"
         ref="pictureRef"
-        @codeId="getCodeId"
+        autocomplete="off"
+        @code-id="getCodeId"
         v-model:value="formData.code"
         :placeholder="t('sys.login.pictureCode')"
       />
@@ -96,7 +97,7 @@
   </Form>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, toRaw, unref, computed } from 'vue';
+  import { reactive, ref, unref, computed } from 'vue';
 
   import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
@@ -107,7 +108,7 @@
     TwitterCircleFilled,
   } from '@ant-design/icons-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { PictureCode } from '/@/components/PictureCode';
+  import { PictureCode } from '/@/components/SkillfullPictureCode';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -134,7 +135,7 @@
   const rememberMe = ref(false);
   const demoAccount = reactive({
     userName: 'demo',
-    password: 'demo123',
+    password: 'skillfull',
   });
   const formData = reactive({
     userName: demoAccount.userName,
@@ -155,15 +156,13 @@
     if (!data) return;
     try {
       loading.value = true;
-      const userInfo = await userStore.login(
-        toRaw({
-          password: data.password,
-          userName: data.userName,
-          codeId: formData.codeId,
-          code: data.code,
-          rememberMe: formData.rememberMe,
-        })
-      );
+      const userInfo = await userStore.login({
+        password: data.password,
+        userName: data.userName,
+        codeId: formData.codeId,
+        code: data.code,
+        rememberMe: formData.rememberMe,
+      });
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
@@ -174,11 +173,14 @@
     } catch (error: any) {
       const { response } = error || {};
       const message = response?.data?.message ?? '';
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: message || error.message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
+      // 针对401不弹出消息,前置弹框已经处理
+      if (!response || response.status != 401) {
+        createErrorModal({
+          title: t('sys.api.errorTip'),
+          content: message || error.message || t('sys.api.networkExceptionMsg'),
+          getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+        });
+      }
       pictureRef.value.refreshCode();
     } finally {
       loading.value = false;

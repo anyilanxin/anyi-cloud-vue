@@ -1,4 +1,4 @@
-import { getCurrentInstance, reactive, ref, watchEffect } from 'vue';
+import { getCurrentInstance, reactive, shallowRef, watchEffect } from 'vue';
 import type { Ref } from 'vue';
 interface Params {
   excludeListeners?: boolean;
@@ -18,7 +18,7 @@ export function useAttrs(params: Params = {}): Ref<Recordable> | {} {
   if (!instance) return {};
 
   const { excludeListeners = false, excludeKeys = [], excludeDefaultKeys = true } = params;
-  const attrs = ref({});
+  const attrs = shallowRef({});
   const allExcludeKeys = excludeKeys.concat(excludeDefaultKeys ? DEFAULT_EXCLUDE_KEYS : []);
 
   // Since attrs are not reactive, make it reactive instead of doing in `onUpdated` hook for better performance

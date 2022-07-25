@@ -34,7 +34,7 @@
   import { getUserInfo } from '/@/api/modules/sys/webLoginCenter';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
-  import { upload } from '/@/api/modules/storage/local/localFile';
+  import { upload } from '/@/api/modules/storage/storageInfoFile';
   export default defineComponent({
     components: {
       BasicForm,

@@ -1,18 +1,6 @@
 <template>
   <span :class="`${prefixCls}- flex items-center `">
-    <Icon
-      v-if="getIcon && getIconType == 0"
-      :icon="getIcon"
-      :size="18"
-      :class="`${prefixCls}-wrapper__icon mr-2`"
-    />
-    <div
-      :class="`${prefixCls}-wrapper__icon mr-2`"
-      v-else-if="getIcon && getIconType == 1"
-      style="display: -webkit-flex; display: flex; align-items: center"
-    >
-      <a-image width="18px" height="18px" :src="getIcon" />
-    </div>
+    <Icon v-if="getIcon" :icon="getIcon" :size="18" :class="`${prefixCls}-wrapper__icon mr-2`" />
     {{ getI18nName }}
   </span>
 </template>
@@ -35,10 +23,9 @@
       const { prefixCls } = useDesign('basic-menu-item-content');
       const getI18nName = computed(() => t(props.item?.name));
       const getIcon = computed(() => props.item?.icon);
-      const getIconType = computed(() => props.item?.iconType || 0);
+
       return {
         prefixCls,
-        getIconType,
         getI18nName,
         getIcon,
       };

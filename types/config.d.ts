@@ -82,8 +82,6 @@ export interface TransitionSetting {
 export interface ProjectConfig {
   // 获取菜单的系统编码,空着表示所有
   systemCode: string;
-  // 系统最好权限标识
-  superRoleCode: string;
   // Storage location of permission related information
   permissionCacheType: CacheTypeEnum;
   // Whether to show the configuration button
@@ -152,12 +150,6 @@ export interface GlobConfig {
   shortName: string;
   // request timeout
   timeout?: number;
-  // 是否开启数据传输加密
-  openDataEncryption: boolean;
-  // 是否刷新密钥
-  refresh: boolean;
-  // 密钥刷新时间(s)
-  refreshTime: number;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -172,4 +164,14 @@ export interface GlobEnvConfig {
   VITE_GLOB_UPLOAD_URL?: string;
   // request timeout
   VITE_REQUEST_TIMEOUT?: number;
+  // 是否开启数据传输加密
+  VITE_GLOB_DATA_ENCRYPTION: boolean;
+  // 是否开启数据传输加密密钥刷新
+  VITE_GLOB_DATA_ENCRYPTION_REFRESH: boolean;
+  // 数据传输加密密钥刷新时间(单位s)
+  VITE_GLOB_DATA_ENCRYPTION_REFRESH_TIME: number;
+  // 灰度开关
+  VITE_GLOB_ENABLE_GRAY: boolean;
+  // 灰度信息地址读取开关(灰度开关打开时有效)
+  VITE_GLOB_ADDRESS_GRAY: boolean;
 }

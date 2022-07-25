@@ -5,7 +5,6 @@
       v-bind="getBindValue"
       :class="`${prefixCls}-select`"
       @change="handleChange"
-      :getPopupContainer="(triggerNode) => triggerNode.parentNode"
       :disabled="disabled"
       size="small"
       :options="options"

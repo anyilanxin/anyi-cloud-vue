@@ -9,7 +9,7 @@ const isLocal = permissionCacheType === CacheTypeEnum.LOCAL;
 
 export function getToken() {
   const data = getAuthCache<TokenInfo>(TOKEN_KEY);
-  return data.token;
+  return data.access_token;
 }
 
 export function getTokenInfo() {

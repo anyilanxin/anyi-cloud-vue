@@ -20,34 +20,16 @@ const storage: AppRouteModule = {
         title: '本地存储管理',
         ignoreKeepAlive: false,
       },
-      component: () => import('/@/views/storage/local/manage/index.vue'),
-    },
-    {
-      path: 'local-config',
-      name: 'LocalConfigManagement',
-      meta: {
-        title: '本地存储配置',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('/@/views/storage/local/config/index.vue'),
+      component: () => import('/@/views/storage/local/index.vue'),
     },
     {
       path: 'oss',
       name: 'OssManagement',
       meta: {
-        title: 'Oss管理',
+        title: 'Oss存储管理',
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/storage/oss/manage/index.vue'),
-    },
-    {
-      path: 'oss-config',
-      name: 'OssConfigManagement',
-      meta: {
-        title: 'oss配置',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('/@/views/storage/oss/config/index.vue'),
+      component: () => import('/@/views/storage/oss/index.vue'),
     },
   ],
 };

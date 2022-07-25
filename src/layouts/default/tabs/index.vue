@@ -5,7 +5,7 @@
       size="small"
       :animated="false"
       :hideAdd="true"
-      :tabBarGutter="6"
+      :tabBarGutter="3"
       :activeKey="activeKeyRef"
       @change="handleChange"
       @edit="handleEdit"
@@ -18,7 +18,7 @@
         </TabPane>
       </template>
 
-      <template #tabBarExtraContent v-if="getShowRedo || getShowQuick">
+      <template #rightExtra v-if="getShowRedo || getShowQuick">
         <TabRedo v-if="getShowRedo" />
         <TabContent isExtra :tabItem="$route" v-if="getShowQuick" />
         <FoldButton v-if="getShowFold" />
@@ -127,8 +127,6 @@
         tabStore.closeTabByKey(targetKey, router);
       }
       return {
-        prefixCls,
-        unClose,
         getWrapClass,
         handleEdit,
         handleChange,

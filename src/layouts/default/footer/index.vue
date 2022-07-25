@@ -30,7 +30,7 @@
   defineProps({
     forceShow: propTypes.bool.def(false),
   });
-  const Footer = ref(Layout.Footer);
+  const Footer = Layout.Footer;
   const { t } = useI18n();
   const { getShowFooter } = useRootSetting();
   const { currentRoute } = useRouter();

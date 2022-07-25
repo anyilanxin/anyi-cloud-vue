@@ -1,10 +1,6 @@
 <template>
   <div :class="getClass" :style="getStyle">
-    <div
-      :class="circled ? `${prefixCls}-image-circle-wrapper` : `${prefixCls}-image-square-wrapper`"
-      :style="getImageWrapperStyle"
-      @click="openModal"
-    >
+    <div :class="`${prefixCls}-image-wrapper`" :style="getImageWrapperStyle" @click="openModal">
       <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
         <Icon
           icon="ant-design:cloud-upload-outlined"
@@ -13,7 +9,7 @@
           color="#d6d6d6"
         />
       </div>
-      <img :src="getPictureUrl" v-if="sourceValue" alt="avatar" />
+      <img :src="sourceValue" v-if="sourceValue" alt="avatar" />
     </div>
     <a-button
       :class="`${prefixCls}-upload-btn`"
@@ -26,9 +22,8 @@
 
     <CopperModal
       @register="register"
-      @uploadSuccess="handleUploadSuccess"
+      @upload-success="handleUploadSuccess"
       :uploadApi="uploadApi"
-      :circled="circled"
       :src="sourceValue"
     />
   </div>
@@ -48,27 +43,21 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { isFunction } from '/@/utils/is';
   import { useI18n } from '/@/hooks/web/useI18n';
   import type { ButtonProps } from '/@/components/Button';
   import Icon from '/@/components/Icon';
-  import { getAttachmentUrl } from '/@/utils';
 
   const props = {
     width: { type: [String, Number], default: '200px' },
-    circled: { type: Boolean, default: true },
     value: { type: String },
     showBtn: { type: Boolean, default: true },
     btnProps: { type: Object as PropType<ButtonProps> },
     btnText: { type: String, default: '' },
     uploadApi: { type: Function as PropType<({ file: Blob, name: string }) => Promise<void>> },
-    handleUploadData: {
-      type: Function as PropType<(data: any) => Promise<any>>,
-    },
   };
 
   export default defineComponent({
-    name: 'CropperAvatar',
+    name: 'SkillfullCropperAvatar',
     components: { CopperModal, Icon },
     props,
     emits: ['update:value', 'change'],
@@ -88,7 +77,7 @@
       const getStyle = computed((): CSSProperties => ({ width: unref(getWidth) }));
 
       const getImageWrapperStyle = computed(
-        (): CSSProperties => ({ width: unref(getWidth), height: unref(getWidth) })
+        (): CSSProperties => ({ width: unref(getWidth), height: unref(getWidth) }),
       );
 
       watchEffect(() => {
@@ -99,19 +88,12 @@
         () => sourceValue.value,
         (v: string) => {
           emit('update:value', v);
-        }
+        },
       );
-      const getPictureUrl = computed(() => {
-        return getAttachmentUrl(sourceValue.value);
-      });
-      async function handleUploadSuccess({ source, data }) {
+
+      function handleUploadSuccess({ source }) {
         sourceValue.value = source;
-        const handleUpload = props.handleUploadData;
-        let handleData = data;
-        if (handleUpload && isFunction(handleUpload)) {
-          handleData = await handleUpload(data);
-        }
-        emit('change', handleData);
+        emit('change', source);
         createMessage.success(t('component.cropper.uploadSuccess'));
       }
 
@@ -128,7 +110,6 @@
         getImageWrapperStyle,
         getStyle,
         handleUploadSuccess,
-        getPictureUrl,
       };
     },
   });
@@ -141,7 +122,7 @@
     display: inline-block;
     text-align: center;
 
-    &-image-circle-wrapper {
+    &-image-wrapper {
       overflow: hidden;
       cursor: pointer;
       background: @component-background;
@@ -153,27 +134,15 @@
       }
     }
 
-    &-image-square-wrapper {
-      overflow: hidden;
-      cursor: pointer;
-      background: @component-background;
-      border: 1px solid @border-color-base;
-
-      img {
-        width: 100%;
-      }
-    }
-
     &-image-mask {
-      opacity: 0;
+      opacity: 0%;
       position: absolute;
       width: inherit;
       height: inherit;
       border-radius: inherit;
       border: inherit;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgb(0 0 0 / 40%);
       cursor: pointer;
-      -webkit-transition: opacity 0.4s;
       transition: opacity 0.4s;
 
       ::v-deep(svg) {
@@ -182,7 +151,7 @@
     }
 
     &-image-mask:hover {
-      opacity: 40;
+      opacity: 4000%;
     }
 
     &-upload-btn {

@@ -5,6 +5,13 @@
         <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
           >新增服务</a-button
         >
+        <a-button
+          color="error"
+          :preIcon="!loadingSync ? 'ant-design:sync-outlined' : ''"
+          :loading="loadingSync"
+          @click="handleSyncGateway"
+          >刷新网关</a-button
+        >
         <a-button color="warning" preIcon="ant-design:cloud-upload-outlined" @click="handleImport"
           >导入</a-button
         >
@@ -58,29 +65,35 @@
           stopButtonPropagation
           :actions="[
             {
-              icon: 'clarity:info-standard-line',
-              tooltip: '详情',
-              onClick: handleView.bind(null, record.serviceId),
-            },
-            {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑',
               onClick: handleEdit.bind(null, record.serviceId),
             },
             {
+              icon: 'ant-design:security-scan-outlined',
+              tooltip: '过滤器',
+              onClick: handleFilter.bind(null, record),
+            },
+            {
               icon: 'ant-design:api-outlined',
               tooltip: '路由',
-              color: 'warning',
+              color: 'error',
               onClick: handleRouter.bind(null, record),
+            },
+            {
+              icon: 'ant-design:deployment-unit-outlined',
+              tooltip: '实例',
+              onClick: handleInstance.bind(null, record),
+              ifShow: () => record.instanceNum != 0,
             },
           ]"
           :dropDownActions="[
             {
-              label: '过滤器',
-              onClick: handleFilter.bind(null, record.serviceId),
+              label: '详情',
+              onClick: handleView.bind(null, record),
             },
             {
-              label: '状态',
+              label: record.serviceState == 1 ? '禁用' : '启用',
               onClick: handleView.bind(null, record.modelId),
             },
             {
@@ -94,23 +107,27 @@
         />
       </template>
     </BasicTable>
-    <ServiceModal @register="registerModal" @success="handleSuccess" />
+    <ModalService @register="registerModal" @success="handleSuccess" />
+    <ModalServiceInstance @register="registerInstanceModal" />
   </div>
 </template>
 <script lang="ts" setup>
   import { onMounted, reactive, ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
+  import ModalService from './ModalService.vue';
+  import ModalServiceInstance from './ModalServiceInstance.vue';
   import { router } from '/@/router';
-  import ServiceModal from './ServiceModal.vue';
   import { columns, searchFormSchema } from './service.data';
   import { useGo } from '/@/hooks/web/usePage';
-  import { selectPage, systemStat } from '/@/api/modules/system/manage/manageService';
+  import { selectPage, systemStat, syncGateway } from '/@/api/modules/system/manage/manageService';
   import { SystemStatDto } from '/@/api/modules/system/manage/model/manageServiceModel';
   import { Alert, Progress } from 'ant-design-vue';
   const go = useGo();
   const [registerModal, { openModal }] = useModal();
+  const [registerInstanceModal, { openModal: openInstanceModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
+  const loadingSync = ref(false);
   const statInfo = ref<SystemStatDto>({
     manageTotalService: 0,
     notManageTotalService: 0,
@@ -131,14 +148,17 @@
     },
     indexColumnProps: {
       width: 70,
+      fixed: 'left',
     },
     useSearchForm: true,
     showTableSetting: true,
     tableSetting: { fullScreen: true },
     bordered: true,
     actionColumn: {
-      width: 150,
+      width: 190,
       title: '操作',
+      align: 'left',
+      fixed: 'right',
       dataIndex: 'action',
       slots: { customRender: 'action' },
     },
@@ -174,19 +194,41 @@
   function handleExport() {}
   function handleRouter(record: Recordable) {
     router.push({
-      name: 'RouterInfo',
-      params: {
+      name: 'FixedPageServiceRouter',
+      query: {
+        serviceId: record.serviceId,
+        serviceName: record.serviceName,
+        serviceCode: record.serviceCode,
+        isLoadBalancer: record.isLoadBalancer,
+      },
+    });
+  }
+  function handleFilter(record: Recordable) {
+    router.push({
+      name: 'FixedPageCustomFilter',
+      query: {
         serviceId: record.serviceId,
         serviceName: record.serviceName,
       },
     });
   }
-  function handleFilter(serviceId: string) {
-    go('/system/service_filter/' + serviceId);
-  }
   function beforeFetch(record: Recordable) {
     getSystemStat();
     return record;
+  }
+  async function handleSyncGateway() {
+    loadingSync.value = true;
+    try {
+      await syncGateway();
+    } finally {
+      loadingSync.value = false;
+    }
+  }
+  function handleInstance(record: Recordable) {
+    openInstanceModal(true, {
+      serviceName: record.serviceName,
+      serviceCode: record.serviceCode,
+    });
   }
   onMounted(() => {
     getSystemStat();

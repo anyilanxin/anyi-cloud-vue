@@ -1,3 +1,65 @@
+## 2.8.0(2021-11.03)
+
+### Upgrade Instructions
+
+- Package manager changed from `yarn` to `pnpm`
+- Delete `node_modules` and `yarn.lock`, install `pnpm` globally
+- Execute `pnpm install`
+
+### ✨ Features
+
+- **Others**
+  - The `VITE_PROXY` configuration in the `.env` file supports single quotes
+  - Remove warnings during build
+
+### 🐛 Bug Fixes
+
+- **BasicTable**
+  - Fix the issue that editable cells cannot be submitted in some cases
+  - Fix the problem that the `inset` attribute does not work
+  - Fix the problem that the performance of `useTable` and `reload` method `await` of `BasicTable` instance are inconsistent
+  - Fix the issue that `clickToRowSelect` would ignore the disabled state of the row selection box
+  - Fix the problem that the page of `BasicTable` will be reset in some cases
+  - Modify the `deleteTableDataRecord` method
+- **BasicModal**
+  - Fixed the problem that `Modal` could not be closed even when clicking on the mask and pressing the `Esc` key
+  - Fixed the issue that clicking the close button and the blank area next to the maximize button would also cause `Modal` to close
+- **BasicTree** Fix the problem that the node slot does not work
+- **CodeEditor** Fix the problem that may cause `Build` failure
+- **BasicForm** Fix the problem that the content width of the custom FormItem component may be out of range
+- **ApiTreeSelect** Fix the problem that the change of `params` failed to trigger the re-request of api data
+- **Others** -Fixed an issue where multiple tabs would not jump to routing when closing tabs in some cases
+  - Fix the issue that some components may cause abnormal hot update
+  - Fix the problem that some sub-components of `antdv` will be reported in the build process when directly `import` part of the `antdv`, such as: TabPane, RadioGroup
+
+## 2.7.2(2021-09-14)
+
+### ✨ Features
+
+- **BasicForm** New `Divider` in the form component for dividing the area of longer forms
+- **BasicTable**
+  - Cell editor adds submit callback, which will decide whether to submit data to the form based on the result returned by the callback function
+  - Add check method for row editing, allowing only check but not submit value, so asynchronously save data successfully before submit to table
+  - Fix the problem that the `rowClassName` property cannot be used at the same time as `striped`.
+- New component **MarkdownViewer** for displaying rich text in Markdown format
+
+### 🐛 Bug Fixes
+
+- **CodeEditor** Fix JSON editor throwing exception when formatting invalid JSON text
+- **Tinymce** fixes an issue where inline mode throws an exception in some scenarios
+- **BasicTable**
+  - Repair the problem that the editing icon is not displayed when the content of editable cell is empty
+  - Repair the problem that the total row at the end of the table sometimes fails to align with the columns in the main part of the table.
+- **MarkDown** Repair the problem that the value of initial value property does not work.
+- **BasicUpload** Repair the problem that `accept` property does not support `MIME` and suffix name starting with dot.
+- **ApiSelect** Fix the problem of type definition of `value` property.
+- **Other**
+  - Repair the problem that some wrapper components give error when using slots.
+  - Repair the problem that `theme` parameter of `useECharts` does not work.
+  - Repair the problem that when `Token` is invalid, pressing F5 to refresh the page may cause abnormal page loading.
+  - Repair the problem that the improper call of `useRedo` may lead to `path` redirection abnormality.
+  - Repair the problem that `vite` custom mode name does not support underscore.
+
 ## 2.7.1(2021-08-16)
 
 - Upgrade vue 3.2, if the operation fails, delete node_modules and reinstall it

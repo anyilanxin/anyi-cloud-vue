@@ -3,7 +3,6 @@ import type { RequestOptions, Result, UploadFileParams } from '../../../../types
 import type { CreateAxiosOptions } from './axiosTransform';
 import axios from 'axios';
 import qs from 'qs';
-import { useGlobSetting } from '/@/hooks/setting';
 import { AxiosCanceler } from './axiosCancel';
 import { isFunction } from '/@/utils/is';
 import { cloneDeep } from 'lodash-es';
@@ -126,7 +125,7 @@ export class VAxios {
   uploadFile<T = any>(
     config: AxiosRequestConfig,
     params: UploadFileParams,
-    options?: RequestOptions
+    options?: RequestOptions,
   ) {
     const { requestOptions } = this.options;
 
@@ -207,11 +206,7 @@ export class VAxios {
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-    const {
-      beforeRequestHook,
-      requestCatchHook,
-      transformRequestHook,
-    } = transform || {};
+    const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {};
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }

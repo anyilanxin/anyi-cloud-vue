@@ -95,15 +95,15 @@
         </div>
       </div>
       <div :class="`${prefixCls}-right`">
-        <div :class="circled ? `${prefixCls}-circle-preview` : `${prefixCls}-square-preview`">
+        <div :class="`${prefixCls}-preview`">
           <img :src="previewSource" v-if="previewSource" :alt="t('component.cropper.preview')" />
         </div>
         <template v-if="previewSource">
           <div :class="`${prefixCls}-group`">
-            <Avatar :src="previewSource" size="large" :shape="circled ? 'circle' : 'square'" />
-            <Avatar :src="previewSource" :size="48" :shape="circled ? 'circle' : 'square'" />
-            <Avatar :src="previewSource" :size="64" :shape="circled ? 'circle' : 'square'" />
-            <Avatar :src="previewSource" :size="80" :shape="circled ? 'circle' : 'square'" />
+            <Avatar :src="previewSource" size="large" />
+            <Avatar :src="previewSource" :size="48" />
+            <Avatar :src="previewSource" :size="64" />
+            <Avatar :src="previewSource" :size="80" />
           </div>
         </template>
       </div>
@@ -234,17 +234,17 @@
       background: #eee;
       background-image: linear-gradient(
           45deg,
-          rgba(0, 0, 0, 0.25) 25%,
+          rgb(0 0 0 / 25%) 25%,
           transparent 0,
           transparent 75%,
-          rgba(0, 0, 0, 0.25) 0
+          rgb(0 0 0 / 25%) 0
         ),
         linear-gradient(
           45deg,
-          rgba(0, 0, 0, 0.25) 25%,
+          rgb(0 0 0 / 25%) 25%,
           transparent 0,
           transparent 75%,
-          rgba(0, 0, 0, 0.25) 0
+          rgb(0 0 0 / 25%) 0
         );
       background-position: 0 0, 12px 12px;
       background-size: 24px 24px;
@@ -257,26 +257,13 @@
       margin-top: 10px;
     }
 
-    &-circle-preview {
+    &-preview {
       width: 220px;
       height: 220px;
       margin: 0 auto;
       overflow: hidden;
       border: 1px solid @border-color-base;
       border-radius: 50%;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    &-square-preview {
-      width: 220px;
-      height: 220px;
-      margin: 0 auto;
-      overflow: hidden;
-      border: 1px solid @border-color-base;
 
       img {
         width: 100%;

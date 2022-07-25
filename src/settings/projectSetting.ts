@@ -15,7 +15,6 @@ import { primaryColor } from '../../build/config/themeConfig';
 // ! You need to clear the browser cache after the change
 const setting: ProjectConfig = {
   systemCode: '',
-  superRoleCode: 'SUPER_ROLE',
   // Whether to show the configuration button
   showSettingButton: true,
 

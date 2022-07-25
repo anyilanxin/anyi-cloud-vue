@@ -73,3 +73,27 @@ export const updateItem = (data: CommonDictItemVo, itemId: string) =>
     url: SysUrlPrefix.SYSTEM + '/common-dict/update-item/{itemId}',
     data: { ...data, itemId },
   });
+
+/**
+ * @description: 数据字典表逻辑删除
+ */
+export const deleteById = (dictId: string) =>
+  defHttp.delete<string>(
+    {
+      url: SysUrlPrefix.SYSTEM + '/common-dict/delete-one/{dictId}',
+      params: { dictId },
+    },
+    { successMessageMode: 'notification' }
+  );
+
+/**
+ * @description: 数据字典配置项表逻辑删除
+ */
+export const deleteItem = (itemId: string) =>
+  defHttp.delete<string>(
+    {
+      url: SysUrlPrefix.SYSTEM + '/common-dict/delete-item-one/{itemId}',
+      params: { itemId },
+    },
+    { successMessageMode: 'notification' }
+  );

@@ -1,20 +1,13 @@
-export interface TokenInfo {
-  token: string;
-  validityInSeconds: number;
-  expiresAt: string;
-  tokenHeaderKey: string;
-  tokenHeaderStartWith: string;
-  tokenType: string;
-  tokenQueryKey: string;
-  refreshTokenKey: string;
-}
-
 export interface LoginPicture {
   userName: string;
   password: string;
-  codeId: string;
-  code: string;
-  rememberMe: boolean;
+  codeId?: string;
+  code?: string;
+  grant_type?: string;
+  client_id?: string;
+  client_secret?: string;
+  scope?: string;
+  rememberMe?: boolean;
 }
 
 export interface LoginSms {

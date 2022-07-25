@@ -42,3 +42,15 @@ export const getById = (areaId: string) =>
     url: SysUrlPrefix.AUTH + '/rbac-user/select/one/{areaId}',
     params: { areaId },
   });
+
+/**
+ * @description: 表逻辑删除
+ */
+export const deleteById = (areaId: string) =>
+  defHttp.delete<string>(
+    {
+      url: SysUrlPrefix.SYSTEM + '/common-area/delete-one/{areaId}',
+      params: { areaId },
+    },
+    { successMessageMode: 'notification' }
+  );

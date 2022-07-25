@@ -21,12 +21,12 @@
             {
               icon: 'clarity:info-standard-line',
               tooltip: '详情',
-              onClick: handleView.bind(null, record.systemId),
+              onClick: handleView.bind(null, record.areaId),
             },
             {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑',
-              onClick: handleEdit.bind(null, record.systemId),
+              onClick: handleEdit.bind(null, record.areaId),
             },
             {
               icon: 'ant-design:delete-outlined',
@@ -34,7 +34,7 @@
               tooltip: '删除',
               popConfirm: {
                 title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.systemId),
+                confirm: handleDelete.bind(null, record.areaId),
               },
             },
           ]"
@@ -47,7 +47,7 @@
 <script lang="ts" setup>
   import { nextTick } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { selectPage } from '/@/api/modules/system/common/commonArea';
+  import { selectPage, deleteById } from '/@/api/modules/system/common/commonArea';
 
   import { useModal } from '/@/components/Modal';
   import OrgModal from './AreaModal.vue';
@@ -96,8 +96,9 @@
   function expandTableAll() {
     nextTick(expandAll);
   }
-  function handleDelete(record: Recordable) {
-    console.log(record);
+  async function handleDelete(areaId: string) {
+    await deleteById(areaId);
+    reload();
   }
   function handleImport() {}
   function handleExport() {}
@@ -108,7 +109,7 @@
       reload();
     }
   }
-  function handleView(systemId: string) {
-    go('/system/account_detail/' + systemId);
+  function handleView(areaId: string) {
+    go('/system/account_detail/' + areaId);
   }
 </script>

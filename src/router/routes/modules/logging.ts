@@ -6,7 +6,7 @@ const logging: AppRouteModule = {
   path: '/logging',
   name: 'logging',
   component: LAYOUT,
-  redirect: '/logging/operate',
+  redirect: '/logging/operatelog',
   meta: {
     orderNo: 7,
     icon: 'ant-design:right-square-outlined',
@@ -14,8 +14,8 @@ const logging: AppRouteModule = {
   },
   children: [
     {
-      path: 'operate',
-      name: 'OperateManage',
+      path: 'operatelog',
+      name: 'OperateLog',
       meta: {
         title: '操作日志',
         ignoreKeepAlive: false,
@@ -23,13 +23,13 @@ const logging: AppRouteModule = {
       component: () => import('/@/views/logging/operate/index.vue'),
     },
     {
-      path: 'data',
-      name: 'DataManagement',
+      path: 'authlog',
+      name: 'AuthLog',
       meta: {
-        title: '数据日志',
+        title: '授权日志',
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/logging/data/index.vue'),
+      component: () => import('/@/views/logging/auth/index.vue'),
     },
   ],
 };

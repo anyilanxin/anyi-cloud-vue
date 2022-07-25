@@ -17,6 +17,12 @@
           icon="ion:document-text-outline"
           v-if="getShowDoc"
         />
+        <MenuItem
+          key="org"
+          :text="t('layout.header.dropdownItemSwitchOrg')"
+          icon="ant-design:user-switch-outlined"
+          v-if="getShowDoc"
+        />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
           v-if="getUseLockPage"
