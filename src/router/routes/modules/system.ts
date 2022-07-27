@@ -86,24 +86,6 @@ const system: AppRouteModule = {
           },
           component: () => import('/@/views/system/rbac/client/index.vue'),
         },
-        {
-          path: 'resource',
-          name: 'ResourceManagement',
-          meta: {
-            title: '资源管理',
-            ignoreKeepAlive: false,
-          },
-          component: () => import('/@/views/system/rbac/resource/index.vue'),
-        },
-        {
-          path: 'resource-api',
-          name: 'ResourceApiManagement',
-          meta: {
-            title: '资源Api管理',
-            ignoreKeepAlive: false,
-          },
-          component: () => import('/@/views/system/rbac/resource-api/index.vue'),
-        },
       ],
     },
     {
