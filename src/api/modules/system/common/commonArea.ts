@@ -5,6 +5,7 @@ import {
   CommonAreaPageDto,
   CommonAreaVo,
   CommonAreaDto,
+  CommonAreaTreeDto,
 } from './model/commonAreaModel';
 import { PageDto } from '/@/api/model/baseModel';
 /**
@@ -52,5 +53,14 @@ export const deleteById = (areaId: string) =>
       url: SysUrlPrefix.SYSTEM + '/common-area/delete-one/{areaId}',
       params: { areaId },
     },
-    { successMessageMode: 'notification' }
+    { successMessageMode: 'notification' },
   );
+
+/**
+ * @description: 通过上级区域编码获取下级
+ */
+export const getList = (parentId: string, activateAreaId?: string) =>
+  defHttp.get<CommonAreaTreeDto[]>({
+    url: SysUrlPrefix.SYSTEM + '/common-area/select/list',
+    params: { parentId, activateAreaId },
+  });
