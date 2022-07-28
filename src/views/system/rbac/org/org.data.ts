@@ -236,8 +236,10 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'areaCode',
-    label: '所属区域',
     component: 'TreeSelect',
+    label: '所属区域',
+    required: true,
+    slot: 'areaCode',
     ifShow: ({ values }) => values.orgType == 1,
   },
   {

@@ -71,3 +71,9 @@ export interface CommonAreaDto {
   address: string;
   remark: string;
 }
+
+export interface CommonAreaTreeDto extends CommonAreaDto {
+  children: CommonAreaTreeDto[];
+  isLeaf: boolean;
+  hasChildren: boolean;
+}
