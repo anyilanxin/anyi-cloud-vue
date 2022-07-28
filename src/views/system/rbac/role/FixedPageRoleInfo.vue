@@ -18,74 +18,6 @@
               style="max-height: 60vh; overflow-y: auto"
             />
           </a-tab-pane>
-          <a-tab-pane key="resource-auth" tab="资源权限">
-            <a-row type="flex" justify="start">
-              <a-col :span="4">
-                <ResourceList @select="handleResourceSelect" />
-              </a-col>
-              <a-col :span="15">
-                <ResourceApiList
-                  :resource="data.resource"
-                  :selectApiInfos="data.selectApiInfos"
-                  v-model:value="data.authData.apiIds"
-                  @change="handleChange"
-                />
-              </a-col>
-              <a-col :span="5" style="max-height: 60vh; overflow-y: auto">
-                <div>
-                  <div
-                    style="
-                      font-size: 18px;
-                      font-weight: 500;
-                      line-height: 26px;
-                      color: #000000d9;
-                      width: 100%;
-                      border-bottom: 1px solid #d9d9d9;
-                      margin-bottom: 3px;
-                    "
-                    >已选择：</div
-                  >
-                  <template v-if="data.selectApiInfos && data.selectApiInfos">
-                    <Popover
-                      placement="bottomRight"
-                      v-for="item in data.selectApiInfos"
-                      :key="item.apiId"
-                    >
-                      <template #content>
-                        <div>
-                          {{ item.apiName }}
-                        </div>
-                        <div>
-                          {{ item.apiUri }}
-                        </div>
-                        <div>
-                          {{ item.permissionExpress }}
-                        </div>
-                      </template>
-                      <a-tag
-                        closable
-                        color="#108ee9"
-                        v-if="item.apiName && item.apiName.length > 4"
-                        style="margin-bottom: 4px; cursor: pointer"
-                        @close="handleCloseApi(item.apiId)"
-                      >
-                        {{ `${item.apiName.slice(0, 4)}...` }}
-                      </a-tag>
-                      <a-tag
-                        closable
-                        v-else
-                        color="#108ee9"
-                        style="margin-bottom: 4px; cursor: pointer"
-                        @close="handleCloseApi(item.apiId)"
-                      >
-                        {{ `${item.apiName || '---'}` }}
-                      </a-tag>
-                    </Popover>
-                  </template>
-                </div>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
           <a-tab-pane key="data-auth" tab="数据权限" class="data-auth">
             <div style="width: 50%">
               <a-radio-group v-model:value="data.authData.dataAuthType" button-style="solid">
@@ -120,10 +52,8 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { Spin, Popover } from 'ant-design-vue';
+  import { Spin } from 'ant-design-vue';
   import MenuAuth from './MenuAuth.vue';
-  import ResourceList from './ResourceList.vue';
-  import ResourceApiList from './ResourceApiList.vue';
   import OrgTree from './OrgTree.vue';
   import { PageWrapper } from '/@/components/Page';
   import { RbacResourceDto } from '/@/api/modules/system/rbac/model/rbacResourceModel';
@@ -165,23 +95,6 @@
       goBack();
     } finally {
       data.submitLoading = false;
-    }
-  }
-  function handleResourceSelect(resource: RbacResourceDto) {
-    data.resource = resource;
-  }
-  function handleChange({ selectedRows, selectedRowKeys }) {
-    data.selectApiInfos = selectedRows;
-    data.authData.apiIds = selectedRowKeys;
-  }
-  function handleCloseApi(appId: string) {
-    let findIndex = data.selectApiInfos.findIndex((val) => val.appId == appId);
-    if (findIndex != -1) {
-      data.selectApiInfos.splice(findIndex, 1);
-    }
-    findIndex = data.authData.apiIds.findIndex((val) => val == appId);
-    if (findIndex != -1) {
-      data.authData.apiIds.splice(findIndex, 1);
     }
   }
   function handleDataAuthChange(keys: string[]) {

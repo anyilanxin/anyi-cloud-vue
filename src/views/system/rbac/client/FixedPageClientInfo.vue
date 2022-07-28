@@ -67,74 +67,6 @@
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane key="resource-auth" tab="资源权限">
-            <a-row type="flex" justify="start">
-              <a-col :span="4">
-                <ResourceList @select="handleResourceSelect" />
-              </a-col>
-              <a-col :span="15">
-                <ResourceApiList
-                  :resource="data.resource"
-                  :clientResourceApiInfos="data.clientResourceApiInfos"
-                  v-model:value="data.authData.clientResourceApiIds"
-                  @change="handleResourceApiChange"
-                />
-              </a-col>
-              <a-col :span="5" style="max-height: 60vh; overflow-y: auto">
-                <div>
-                  <div
-                    style="
-                      font-size: 18px;
-                      font-weight: 500;
-                      line-height: 26px;
-                      color: #000000d9;
-                      width: 100%;
-                      border-bottom: 1px solid #d9d9d9;
-                      margin-bottom: 3px;
-                    "
-                    >已选择：</div
-                  >
-                  <template v-if="data.clientResourceApiInfos && data.clientResourceApiInfos">
-                    <Popover
-                      placement="bottomRight"
-                      v-for="item in data.clientResourceApiInfos"
-                      :key="item.apiId"
-                    >
-                      <template #content>
-                        <div>
-                          {{ item.apiName }}
-                        </div>
-                        <div>
-                          {{ item.apiUri }}
-                        </div>
-                        <div>
-                          {{ item.permissionExpress }}
-                        </div>
-                      </template>
-                      <a-tag
-                        closable
-                        color="#108ee9"
-                        v-if="item.apiName && item.apiName.length > 4"
-                        style="margin-bottom: 4px; cursor: pointer"
-                        @close="handleCloseApi(item.apiId)"
-                      >
-                        {{ `${item.apiName.slice(0, 4)}...` }}
-                      </a-tag>
-                      <a-tag
-                        closable
-                        v-else
-                        color="#108ee9"
-                        style="margin-bottom: 4px; cursor: pointer"
-                        @close="handleCloseApi(item.apiId)"
-                      >
-                        {{ `${item.apiName || '---'}` }}
-                      </a-tag>
-                    </Popover>
-                  </template>
-                </div>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
         </a-tabs>
       </a-card>
     </Spin>
@@ -153,9 +85,7 @@
 </template>
 <script lang="ts" setup>
   import { Spin, Popover } from 'ant-design-vue';
-  import ResourceList from './ResourceList.vue';
   import RoleList from './RoleList.vue';
-  import ResourceApiList from './ResourceApiList.vue';
   import { PageWrapper } from '/@/components/Page';
   import { RbacResourceDto } from '/@/api/modules/system/rbac/model/rbacResourceModel';
   import { getById, updateAuth } from '/@/api/modules/system/rbac/rbacClientDetails';
@@ -194,26 +124,9 @@
       data.submitLoading = false;
     }
   }
-  function handleResourceSelect(resource: RbacResourceDto) {
-    data.resource = resource;
-  }
-  function handleResourceApiChange({ selectedRows, selectedRowKeys }) {
-    data.clientResourceApiInfos = selectedRows;
-    data.authData.clientResourceApiIds = selectedRowKeys;
-  }
   function handleRoleChange({ selectedRows, selectedRowKeys }) {
     data.roleInfos = selectedRows;
     data.authData.roleIds = selectedRowKeys;
-  }
-  function handleCloseApi(appId: string) {
-    let findIndex = data.clientResourceApiInfos.findIndex((val) => val.appId == appId);
-    if (findIndex != -1) {
-      data.clientResourceApiInfos.splice(findIndex, 1);
-    }
-    findIndex = data.authData.clientResourceApiIds.findIndex((val) => val == appId);
-    if (findIndex != -1) {
-      data.authData.clientResourceApiIds.splice(findIndex, 1);
-    }
   }
   function handleCloseRole(roleId: string) {
     let findIndex = data.roleInfos.findIndex((val) => val.roleId == roleId);
