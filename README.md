@@ -1,4 +1,4 @@
-<img src="./public/resource/img/logo.png"  height="200" width="200">
+<img src="./docs/images/logo.png"  height="200" width="200">
 
 # Skill Full Cloud Vue
 
@@ -12,6 +12,10 @@ vue3、vite、antdesign vue、skillfull platform(micro service web)
 
 - 开发文档： [https://divisu.com/doc-cloud](https://divisu.com/doc-cloud/)
 
-- QQ 交流群 ： 666029437
-
 - 后端地址 ：[https://github.com/zxiaozhou/skillfull-cloud](https://github.com/zxiaozhou/skillfull-cloud)
+
+## 联系我们
+
+| QQ 群:666029437                                    |
+| -------------------------------------------------- |
+| <img src="./docs/images/qq_group.png" width="200"> |
