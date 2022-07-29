@@ -1,10 +1,10 @@
 {
-  "name": "skill-full",
-  "version": "2.8.0",
+  "name": "skill-full-cloud-vue",
+  "version": "0.9.9",
   "author": {
-    "name": "vben",
-    "email": "anncwb@126.com",
-    "url": "https://github.com/anncwb"
+    "name": "zxiaozhou",
+    "email": "z7630853@163.com",
+    "url": "https://github.com/zxiaozhou"
   },
   "scripts": {
     "bootstrap": "pnpm install",
@@ -135,10 +135,9 @@
     "stylelint-order": "^5.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
-   "vite": "^2.9.5",
+    "vite": "^2.9.5",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.2.0",
-    "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-mkcert": "^1.6.0",
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-purge-icons": "^0.8.1",
@@ -151,20 +150,15 @@
     "vue-eslint-parser": "^8.3.0",
     "vue-tsc": "^0.33.9"
   },
-  "resolutions": {
-    "bin-wrapper": "npm:bin-wrapper-china",
-    "rollup": "^2.56.3",
-    "gifsicle": "5.2.0"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anncwb/vue-skill-full.git"
+    "url": "git+https://github.com/zxiaozhou/skillfull-cloud-vue.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/anncwb/vue-skill-full/issues"
+    "url": "https://github.com/zxiaozhou/skillfull-cloud-vue/issues"
   },
-  "homepage": "https://github.com/anncwb/vue-skill-full",
+  "homepage": "https://github.com/zxiaozhou/skillfull-cloud-vue",
   "engines": {
     "node": "^12 || >=14"
   },

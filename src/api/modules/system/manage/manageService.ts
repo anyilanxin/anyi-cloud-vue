@@ -28,7 +28,7 @@ export const getValidServiceInfo = () =>
 export const syncGateway = (mode: SuccessMessageMode = 'notification') =>
   defHttp.get<String>(
     { url: SysUrlPrefix.SYSTEM + '/manage-service//refresh-gateway' },
-    { successMessageMode: mode }
+    { successMessageMode: mode },
   );
 
 /**
@@ -58,7 +58,7 @@ export const updateInstance = (data: NacosUpdateInstanceVo) =>
       url: SysUrlPrefix.SYSTEM + '/manage-service/update/service-instance',
       data,
     },
-    { successMessageMode: 'notification' }
+    { successMessageMode: 'notification' },
   );
 
 /**
@@ -97,7 +97,7 @@ export const deleteById = (serviceId: string) =>
       url: SysUrlPrefix.SYSTEM + '/manage-service/delete/{serviceId}',
       params: { serviceId },
     },
-    { successMessageMode: 'notification' }
+    { successMessageMode: 'notification' },
   );
 
 /**

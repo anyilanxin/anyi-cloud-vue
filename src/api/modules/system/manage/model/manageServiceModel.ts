@@ -2,6 +2,7 @@ import { BasePageVo } from '/@/api/model/baseModel';
 export interface ValidServiceInfoDto {
   label: string;
   value: string;
+  serviceCode: string;
   disabled: string;
 }
 export interface InstancePageVo extends BasePageVo {

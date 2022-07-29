@@ -1,7 +1,7 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { upload } from '/@/api/modules/storage/storageInfoFile';
-import { selectList } from '/@/api/modules/system/rbac/rbacResource';
+import { getValidServiceInfo } from '/@/api/modules/system/manage/manageService';
 export const columns: BasicColumn[] = [
   {
     title: '客户端id',
@@ -180,17 +180,16 @@ export function createClientFormSchema(update) {
       },
     },
     {
-      label: '授权资源',
+      label: '授权服务',
       required: true,
       field: 'resourceIds',
       component: 'ApiSelect',
       componentProps: {
         mode: 'multiple',
-        resultField: 'resourceId',
-        labelField: 'resourceName',
-        valueField: 'resourceId',
-        params: '1',
-        api: selectList,
+        resultField: 'serviceCode',
+        labelField: 'label',
+        valueField: 'serviceCode',
+        api: getValidServiceInfo,
       },
       colProps: { lg: 24, md: 24 },
       ifShow: ({ values }) => values.limitResource == 1,
