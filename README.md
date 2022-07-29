@@ -10,7 +10,7 @@ vue3、vite、antdesign vue、skillfull platform(micro service web)
 
 - 在线演示 ： [https://divisu.com](https://divisu.com)
 
-- 开发文档： [https://divisu.com/doc-cloud/](https://divisu.com/doc-cloud/)
+- 开发文档： [https://divisu.com/doc-cloud](https://divisu.com/doc-cloud/)
 
 - QQ 交流群 ： 666029437
 
