@@ -69,7 +69,7 @@ export interface RbacMenuVo {
   orderNo: number;
   ignoreRoute?: boolean;
   hidePathForChildren?: boolean;
-  actions?: string;
+  buttonAction?: string;
   systemId: string;
   remark?: string;
   type?: string;
@@ -104,7 +104,7 @@ export interface RbacMenuDto {
   orderNo: number;
   ignoreRoute?: boolean;
   hidePathForChildren?: boolean;
-  actions?: string;
+  buttonAction?: string;
   systemId?: string;
   enableDelete: number;
   menuSysCode: string;
