@@ -29,6 +29,11 @@ export interface ErrorLogInfo {
   time?: string;
 }
 
+export interface RoleInfo {
+  roleCode: string;
+  roleId: string;
+  roleName: string;
+}
 export interface UserInfo {
   userId: string;
   userName: string;
@@ -44,6 +49,15 @@ export interface UserInfo {
   currentDepartName: string;
   homePath?: string;
   roleCodes: string[];
+  roleIds: string[];
+  roleInfos: RoleInfo[];
+  superAdmin: boolean;
+  currentAreaCode: string;
+  currentAreaName: string;
+  currentOrgCode: string;
+  currentOrgId: string;
+  currentOrgName: string;
+  currentTenantId: string;
 }
 
 export interface TokenInfo {

@@ -8,75 +8,7 @@
     width="47%"
     :min-height="370"
   >
-    <BasicForm @register="registerForm" style="padding-right: 20px">
-      <template #buttonExpress="{ model, field }">
-        <a-textarea v-model:value="model[field]" placeholder="请输入鉴权SpEl表达式" allowClear />
-        <div style="margin-top: 5px">
-          常见表达式：
-          <a-tag
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('hasRole()')"
-            >拥有角色</a-tag
-          >
-          <a-tag
-            color="warning"
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('hasAnyRole()')"
-            >拥有任意一个角色</a-tag
-          >
-          <a-tag
-            color="success"
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('hasAuthority()')"
-            >拥有权限</a-tag
-          >
-          <a-tag
-            color="processing"
-            style="cursor: pointer"
-            @click="handleAddExpression('hasAnyAuthority()')"
-            >拥有任意一个权限</a-tag
-          >
-        </div>
-        <div style="margin-top: 5px">
-          常见鉴权：
-          <a-tag
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('permitAll()')"
-            >所有放行</a-tag
-          >
-          <a-tag
-            color="warning"
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('denyAll()')"
-            >所有都拒绝</a-tag
-          >
-          <a-tag
-            color="success"
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression('isAnonymous()')"
-            >匿名可访问</a-tag
-          >
-          <a-tag
-            color="processing"
-            style="cursor: pointer"
-            @click="handleAddExpression('isAuthenticated()')"
-            >授权可访问</a-tag
-          >
-        </div>
-        <div style="margin-top: 5px">
-          常见规则：
-          <a-tag style="cursor: pointer; margin-right: 8px" @click="handleAddExpression(' && ')"
-            >并且</a-tag
-          >
-          <a-tag
-            color="warning"
-            style="cursor: pointer; margin-right: 8px"
-            @click="handleAddExpression(' || ')"
-            >或</a-tag
-          >
-        </div>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" style="padding-right: 20px" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -96,7 +28,7 @@
   }) => {
     return getMenuTree(params.menuType as string, params.systemId, params.status);
   };
-  const [registerForm, { setFieldsValue, resetFields, validate, getFieldsValue }] = useForm({
+  const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
     labelWidth: 120,
     schemas: createFormSchemas(apiGetMenuTree, isUpdate, systemId),
     showActionButtonGroup: false,
@@ -140,15 +72,5 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
-  }
-  function handleAddExpression(value: string) {
-    const modelInfo = getFieldsValue();
-    if (!modelInfo.buttonExpress) {
-      modelInfo.buttonExpress = '';
-    }
-    modelInfo.buttonExpress += value;
-    setFieldsValue({
-      ...modelInfo,
-    });
   }
 </script>
