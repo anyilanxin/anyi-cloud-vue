@@ -507,6 +507,7 @@ export function createFormSchemas(api, disable, systemId) {
     {
       field: 'buttonAction',
       label: '按钮标识',
+      required: true,
       component: 'Input',
       ifShow: ({ values }) => isButton(values.menuType),
     },
