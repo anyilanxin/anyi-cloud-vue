@@ -62,28 +62,31 @@ export function usePermission() {
       return def;
     }
     // 如果是超级管理员则拥有所有权限直接放行
-    const superRoleCode = projectSetting.superRoleCode;
-    const roleCodes = userStore.getRoleList as string[];
-    if (roleCodes && roleCodes.length > 0) {
-      if (roleCodes.includes(superRoleCode)) {
-        return def;
-      }
-    }
-    const routerInfo = router.currentRoute.value?.name;
-    if (!routerInfo) {
+    const userInfo = userStore.getUserInfo;
+    if (userInfo.superAdmin) {
       return true;
     }
-    const actionInfo = appStore.getActionInfo || {};
-    if (!actionInfo || Object.keys(actionInfo).length <= 0) {
+    // 获取权限计算表达式Map，不存在则有权限
+    const actionTagExpressionMap = router.currentRoute.value?.meta?.actionTagExpression || {};
+    if (Object.keys(actionTagExpressionMap).length <= 0) {
       return true;
     }
-    const permissionExpression = actionInfo[routerInfo]?.[value];
+    // 获取指定指令的表达式，不存在则有权限
+    let permissionExpression = actionTagExpressionMap[value];
     if (!permissionExpression) {
       return true;
     }
-    const checkResult = eval(permissionExpression);
+    // 进行表达式运算
+    permissionExpression = trimAll(permissionExpression);
+    permissionExpression = permissionExpression.replace('"', "'");
+    console.log('----permissionExpression----------', permissionExpression);
+    let checkResult = false;
+    try {
+      checkResult = eval(permissionExpression);
+    } catch (error) {}
     return checkResult;
   }
+
   /**
    * 含有某个角色
    */
@@ -123,7 +126,7 @@ export function usePermission() {
     if (!value) {
       return true;
     }
-    const allCodeList = (router.currentRoute.value?.meta?.actionSet || []) as string[];
+    const allCodeList = (router.currentRoute.value?.meta?.noRoleActionSet || []) as string[];
     if (allCodeList.length <= 0) {
       return false;
     }
@@ -138,7 +141,7 @@ export function usePermission() {
       return true;
     }
     const authoritys = value.split(',');
-    const allCodeList = (router.currentRoute.value?.meta?.actionSet || []) as string[];
+    const allCodeList = (router.currentRoute.value?.meta?.noRoleActionSet || []) as string[];
     if (allCodeList.length <= 0) {
       return false;
     }
@@ -172,6 +175,22 @@ export function usePermission() {
   function isAuthenticated() {
     return true;
   }
+  function test() {
+    hasRole('hasRole');
+    hasAnyRole('dsfsdf');
+    hasAuthority('sdfsdf');
+    hasAnyAuthority('sdfsdf');
+    permitAll();
+    denyAll();
+    isAnonymous();
+    isAuthenticated();
+  }
+  function trimAll(ele: string) {
+    if (typeof ele === 'string') {
+      return ele.split(' ').join('');
+    }
+    return ele;
+  }
   /**
    * Change roles
    * @param roles
@@ -179,7 +198,7 @@ export function usePermission() {
   async function changeRole(roles: RoleEnum | RoleEnum[]): Promise<void> {
     if (projectSetting.permissionMode !== PermissionModeEnum.ROUTE_MAPPING) {
       throw new Error(
-        'Please switch PermissionModeEnum to ROUTE_MAPPING mode in the configuration to operate!'
+        'Please switch PermissionModeEnum to ROUTE_MAPPING mode in the configuration to operate!',
       );
     }
 
@@ -197,5 +216,5 @@ export function usePermission() {
     resume();
   }
 
-  return { changeRole, hasPermission, togglePermissionMode, refreshMenu };
+  return { changeRole, hasPermission, togglePermissionMode, refreshMenu, test };
 }
