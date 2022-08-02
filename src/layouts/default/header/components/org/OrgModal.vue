@@ -55,7 +55,8 @@
   });
 
   async function handleCheckOrg() {
-    userStore.switchOrg('-----');
+    const values = await validateFields;
+    userStore.switchOrg(values['orgId']);
     // 切换机构
     closeModal();
   }
