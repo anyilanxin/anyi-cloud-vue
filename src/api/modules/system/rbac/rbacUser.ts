@@ -7,6 +7,8 @@ import {
   RbacUserVo,
   RbacUserDto,
   RbacCorrelateRoleVo,
+  RbacEnalbeUserPageVo,
+  RbacJoinOrgVo,
 } from './model/rbacUserModel';
 import { PageDto } from '/@/api/model/baseModel';
 
@@ -16,6 +18,15 @@ import { PageDto } from '/@/api/model/baseModel';
 export const selectPage = (data: RbacUserPageVo) =>
   defHttp.post<PageDto<RbacUserPageDto>>({
     url: SysUrlPrefix.SYSTEM + '/rbac-user/select/page',
+    data,
+  });
+
+/**
+ * @description: 分页查询可关联的用户信息
+ */
+export const selectEnableUserPage = (data: RbacEnalbeUserPageVo) =>
+  defHttp.post<PageDto<RbacUserPageDto>>({
+    url: SysUrlPrefix.SYSTEM + '/rbac-user/select/enable-user-page',
     data,
   });
 
@@ -79,17 +90,17 @@ export const syncProcess = (mode: SuccessMessageMode = 'notification') =>
 /**
  * @description: 加入机构
  */
-export const joinOrg = (userId: string, orgIds: string[]) =>
+export const joinOrg = (data: RbacJoinOrgVo) =>
   defHttp.post<string>({
-    url: SysUrlPrefix.SYSTEM + '/rbac-user/join-org/{userId}',
-    data: { orgIds, userId },
+    url: SysUrlPrefix.SYSTEM + '/rbac-user/join-org',
+    data,
   });
 
 /**
  * @description: 移除机构
  */
 export const removeOrg = (userId: string, orgId: string) =>
-  defHttp.post<string>({
+  defHttp.get<string>({
     url: SysUrlPrefix.SYSTEM + '/rbac-user/remove-org',
     params: { userId, orgId },
   });

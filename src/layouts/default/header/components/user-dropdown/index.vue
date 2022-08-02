@@ -1,7 +1,7 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getPictureUrl(getUserInfo.avatar)" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.nickName || getUserInfo.realName }}
@@ -19,11 +19,11 @@
         />
         <MenuItem
           key="org"
-          :text="t('layout.header.dropdownItemSwitchOrg')"
-          icon="ant-design:user-switch-outlined"
-          v-if="getShowDoc"
+          :text="getUserInfo.currentOrgName"
+          icon="ant-design:cluster-outlined"
+          v-if="getUserInfo.currentOrgName"
         />
-        <MenuDivider v-if="getShowDoc" />
+        <MenuDivider v-if="getShowDoc || getUserInfo.currentOrgName" />
         <MenuItem
           v-if="getUseLockPage"
           key="lock"
@@ -39,6 +39,7 @@
     </template>
   </Dropdown>
   <LockAction @register="register" />
+  <OrgModal @register="registerOrg" />
 </template>
 <script lang="ts">
   // components
@@ -59,7 +60,7 @@
   import { openWindow } from '/@/utils';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'org';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -69,6 +70,7 @@
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
+      OrgModal: createAsyncComponent(() => import('../org/OrgModal.vue')),
     },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
@@ -85,8 +87,22 @@
         if (!userInfo || Object.keys(userInfo).length <= 0) {
           getUserAndAuth();
         }
-        const { realName = '', nickName, avatar, shortProfile } = userStore.getUserInfo || {};
-        return { realName, avatar: avatar || headerImg, shortProfile, nickName };
+        const {
+          realName = '',
+          nickName,
+          avatar,
+          shortProfile,
+          currentOrgId,
+          currentOrgName,
+        } = userStore.getUserInfo || {};
+        return {
+          realName,
+          avatar: getAttachmentUrl(avatar || headerImg),
+          shortProfile,
+          nickName,
+          currentOrgId,
+          currentOrgName: currentOrgName,
+        };
       });
 
       async function getUserAndAuth() {
@@ -94,9 +110,16 @@
       }
 
       const [register, { openModal }] = useModal();
+      const [registerOrg, { openModal: openOrgModal }] = useModal();
 
       function handleLock() {
         openModal(true);
+      }
+
+      function handleOrg() {
+        openOrgModal(true, {
+          orgId: userStore.getUserInfo.currentOrgId,
+        });
       }
 
       //  login out
@@ -107,9 +130,6 @@
       // open doc
       function openDoc() {
         openWindow(DOC_URL);
-      }
-      function getPictureUrl(url: string) {
-        return getAttachmentUrl(url);
       }
       function handleMenuClick(e: { key: MenuEvent }) {
         switch (e.key) {
@@ -122,6 +142,9 @@
           case 'lock':
             handleLock();
             break;
+          case 'org':
+            handleOrg();
+            break;
         }
       }
 
@@ -131,8 +154,8 @@
         getUserInfo,
         handleMenuClick,
         getShowDoc,
-        getPictureUrl,
         register,
+        registerOrg,
         getUseLockPage,
       };
     },

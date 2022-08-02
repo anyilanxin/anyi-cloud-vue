@@ -114,6 +114,82 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
 ];
+export const associateColumns: BasicColumn[] = [
+  {
+    title: '用户名',
+    dataIndex: 'userName',
+    fixed: 'left',
+    width: 120,
+  },
+  {
+    title: '头像',
+    dataIndex: 'avatar',
+    fixed: 'left',
+    width: 70,
+    slots: { customRender: 'avatar' },
+  },
+  {
+    title: '真实姓名',
+    dataIndex: 'realName',
+    width: 150,
+  },
+  {
+    title: '性别',
+    dataIndex: 'sex',
+    width: 80,
+    customRender: ({ record }) => {
+      return sex[record.sex] || '';
+    },
+  },
+  {
+    title: '电话号码',
+    dataIndex: 'phone',
+    width: 150,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    sorter: true,
+    defaultSortOrder: 'descend',
+    width: 170,
+  },
+  {
+    title: '状态',
+    dataIndex: 'userStatus',
+    sorter: true,
+    fixed: 'right',
+    slots: { customRender: 'userStatus' },
+    width: 80,
+  },
+];
+export const associateSearchFormSchema: FormSchema[] = [
+  {
+    field: 'keyword',
+    label: '关键信息',
+    component: 'Input',
+    colProps: { span: 6 },
+  },
+  {
+    field: 'startTime',
+    label: '开始时间',
+    colProps: { span: 6 },
+    component: 'DatePicker',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD HH:mm',
+      format: 'YYYY-MM-DD HH:mm',
+    },
+  },
+  {
+    field: 'endTime',
+    label: '结束时间',
+    colProps: { span: 6 },
+    component: 'DatePicker',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD HH:mm',
+      format: 'YYYY-MM-DD HH:mm',
+    },
+  },
+];
 const disabledDate = (current: Dayjs) => {
   return current && current >= dayjs().endOf('day');
 };

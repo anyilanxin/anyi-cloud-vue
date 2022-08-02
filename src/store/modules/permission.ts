@@ -96,7 +96,7 @@ export const usePermissionStore = defineStore({
     //   const codeList = await getPermCode();
     //   this.setPermCodeList(codeList);
     // },
-    async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
+    async buildRoutesAction(orgId?: string): Promise<AppRouteRecordRaw[]> {
       // const { t } = useI18n();
       const userStore = useUserStore();
       const appStore = useAppStoreWithOut();
@@ -147,7 +147,7 @@ export const usePermissionStore = defineStore({
         }
         return;
       };
-      console.log('-----permissionMode---------', permissionMode);
+
       switch (permissionMode) {
         case PermissionModeEnum.ROLE:
           routes = filter(asyncRoutes, routeFilter);
@@ -185,7 +185,7 @@ export const usePermissionStore = defineStore({
           try {
             // this.changePermissionCode();
             // 加载路由前获取用户信息
-            await userStore.getUserAndAuth();
+            await userStore.getUserAndAuth(orgId);
             routeList = (await getRouterInfoTree(projectSetting.systemCode)) as AppRouteRecordRaw[];
           } catch (error) {
             console.error(error);

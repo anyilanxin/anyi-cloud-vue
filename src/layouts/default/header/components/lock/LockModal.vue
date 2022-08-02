@@ -1,5 +1,6 @@
 <template>
   <BasicModal
+    :canFullscreen="false"
     :footer="null"
     :title="t('layout.header.lockScreen')"
     v-bind="$attrs"
@@ -30,7 +31,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '/@/components/Modal/index';
   import { BasicForm, useForm } from '/@/components/Form/index';
-
+  import { getAttachmentUrl } from '/@/utils';
   import { useUserStore } from '/@/store/modules/user';
   import { useLockStore } from '/@/store/modules/lock';
   import headerImg from '/@/assets/images/header.jpg';
@@ -76,7 +77,7 @@
 
       const avatar = computed(() => {
         const { avatar } = userStore.getUserInfo;
-        return avatar || headerImg;
+        return getAttachmentUrl(avatar || headerImg);
       });
 
       return {

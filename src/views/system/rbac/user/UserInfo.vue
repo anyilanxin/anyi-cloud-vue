@@ -5,10 +5,10 @@
         <a-button
           type="primary"
           preIcon="ant-design:plus-outlined"
-          @click="handleCreate"
+          @click="handleAssociate(orgId)"
           v-auth="'insert'"
-          v-if="orgId"
-          >关联用户</a-button
+          :disabled="!orgId"
+          >关联已有用户</a-button
         >
         <a-button
           type="primary"
@@ -78,8 +78,11 @@
             {
               label: '移除机构',
               ifShow: () => (orgId ? true : false),
-              auth: 'resetPassword',
-              onClick: handleRemoveOrg.bind(null, record.userId),
+              auth: 'removeOrg',
+              popConfirm: {
+                title: `确定要把'${record.userName}'移除'${orgName}'机构吗？`,
+                confirm: handleRemoveOrg.bind(null, record.userId),
+              },
             },
             {
               label: '重置密码',
@@ -90,22 +93,30 @@
         />
       </template>
     </BasicTable>
+    <AssociateOrgModal @register="registerModal" @success="handleAssociateSuccess" />
   </div>
 </template>
 
 <script lang="ts" setup>
   import { reactive, watch } from 'vue';
+  import { useModal } from '/@/components/Modal';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { selectPage, deleteById, removeOrg } from '/@/api/modules/system/rbac/rbacUser';
   import { getAttachmentUrl } from '/@/utils';
   import { router } from '/@/router';
   import { useRoute } from 'vue-router';
+  import AssociateOrgModal from './AssociateOrgModal.vue';
   import { columns, searchFormSchema } from './user.data';
   import { useGo } from '/@/hooks/web/usePage';
+  const [registerModal, { openModal }] = useModal();
   const route = useRoute();
   const params = reactive(route.query as any);
   const props = defineProps({
     orgId: {
+      type: String,
+      default: '',
+    },
+    orgName: {
       type: String,
       default: '',
     },
@@ -154,10 +165,16 @@
       name: 'FixedPageUserInfo',
       query: {
         orgId: props.orgId,
+        orgName: props.orgName,
       },
     });
   }
-
+  function handleAssociate(orgId: string) {
+    openModal(true, {
+      orgId,
+      orgName: props.orgName,
+    });
+  }
   async function handleRemoveOrg(userId: string) {
     await removeOrg(userId, props.orgId);
     reload();
@@ -189,8 +206,11 @@
   }
   function handleImport() {}
   function handleExport() {}
-  function handleOrgChange(orgId = '') {
+  function handleOrgChange(orgId) {
     searchInfo.orgId = orgId;
+    reload();
+  }
+  function handleAssociateSuccess() {
     reload();
   }
 

@@ -7,6 +7,7 @@ import {
   CheckOldUserPhoneVo,
   ChangeUserPhoneVo,
   BindUserPhoneVo,
+  UserOrgTreeInfo,
 } from './model/webLoginCenterModel';
 import type { UserInfo } from '/#/store';
 import type { AppRouteRecordRaw } from '/@/router/types';
@@ -14,8 +15,16 @@ import type { AppRouteRecordRaw } from '/@/router/types';
 /**
  * @description: 获取用户信息
  */
-export const getUserInfo = () =>
-  defHttp.get<UserInfo>({ url: SysUrlPrefix.AUTH + '/oauth/user-info' });
+export const getUserInfo = (orgId?: string) =>
+  defHttp.get<UserInfo>({ url: SysUrlPrefix.AUTH + '/oauth/user-info', params: { orgId } });
+
+/**
+ * @description: 获取用户机构列表(树形)
+ */
+export const getUserOrgInfo = () =>
+  defHttp.get<UserOrgTreeInfo[]>({
+    url: SysUrlPrefix.SYSTEM + '/rbac-user-center/get/user-org-info',
+  });
 
 /**
  * @description: 获取用户路由菜单信息
