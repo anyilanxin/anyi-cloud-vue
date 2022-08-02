@@ -53,3 +53,24 @@ export interface BindUserPhoneVo {
   phone: string;
   address: string;
 }
+
+export interface UserOrgTreeInfo {
+  orgId: string;
+  parentId: string;
+  orgName: string;
+  orgSimpleName: string;
+  orgNameEn: string;
+  orgNameAbbr: string;
+  orgOrder: string;
+  orgType: number;
+  orgCode: string;
+  orgSysCode: string;
+  orgStatus: number;
+  email: string;
+  phone: string;
+  fax: string;
+  address: string;
+  socialCode: string;
+  areaCode: string;
+  areaCodeName: string;
+}

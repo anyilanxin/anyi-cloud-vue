@@ -92,7 +92,7 @@ export const useUserStore = defineStore({
       params: LoginPicture & {
         goHome?: boolean;
         mode?: ErrorMessageMode;
-      }
+      },
     ): Promise<UserInfo | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
@@ -108,6 +108,7 @@ export const useUserStore = defineStore({
         } else if (goHome) {
           const permissionStore = usePermissionStore();
           if (!permissionStore.isDynamicAddedRoute) {
+            console.log('-------sdfsdfsdfsdfsdfsdfd----99999---');
             const routes = await permissionStore.buildRoutesAction();
             routes.forEach((route) => {
               router.addRoute(route as unknown as RouteRecordRaw);
@@ -127,9 +128,9 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
-    async getUserAndAuth(): Promise<UserInfo> {
+    async getUserAndAuth(orgId?: string): Promise<UserInfo> {
       // 获取用户信息
-      const userInfo = await getUserInfo();
+      const userInfo = await getUserInfo(orgId);
       this.setUserInfo(userInfo);
       this.setRoleList(userInfo?.roleCodes || []);
       // 获取权限信息
@@ -174,6 +175,24 @@ export const useUserStore = defineStore({
           await this.logout(true);
         },
       });
+    },
+    /**
+     * @description: 切换机构
+     */
+    async switchOrg(orgId: string) {
+      const { createMessage } = useMessage();
+      try {
+        const permissionStore = usePermissionStore();
+        const routes = await permissionStore.buildRoutesAction(orgId);
+        routes.forEach((route) => {
+          router.addRoute(route as unknown as RouteRecordRaw);
+        });
+        router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+      } catch (error) {
+        // createMessage.error(error?.message || '切换机构失败');
+        return Promise.reject(error);
+      }
+      createMessage.success('切换机构成功');
     },
   },
 });
