@@ -101,7 +101,7 @@
           shortProfile,
           nickName,
           currentOrgId,
-          currentOrgName: currentOrgName || 'sdfsdfsdf',
+          currentOrgName: currentOrgName,
         };
       });
 
