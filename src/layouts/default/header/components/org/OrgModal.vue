@@ -29,11 +29,7 @@
   import headerImg from '/@/assets/images/header.jpg';
   const { prefixCls } = useDesign('header-lock-modal');
   const userStore = useUserStore();
-
-  const getRealName = computed(() => userStore.getUserInfo?.realName);
-  const [register, { closeModal }] = useModalInner();
-
-  const [registerForm, { validateFields, resetFields }] = useForm({
+  const [registerForm, { validateFields, resetFields, setFieldsValue }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -52,6 +48,14 @@
         },
       },
     ],
+  });
+  const getRealName = computed(() => userStore.getUserInfo?.realName);
+  const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    resetFields();
+    setModalProps({ confirmLoading: false });
+    setFieldsValue({
+      orgId: data?.orgId,
+    });
   });
 
   async function handleCheckOrg() {

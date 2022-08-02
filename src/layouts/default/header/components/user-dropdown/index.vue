@@ -117,7 +117,9 @@
       }
 
       function handleOrg() {
-        openOrgModal(true);
+        openOrgModal(true, {
+          orgId: userStore.getUserInfo.currentOrgId,
+        });
       }
 
       //  login out
