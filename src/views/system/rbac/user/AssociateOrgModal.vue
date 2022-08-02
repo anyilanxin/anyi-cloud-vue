@@ -58,21 +58,22 @@
   import { getAttachmentUrl } from '/@/utils';
   import { associateColumns, associateSearchFormSchema } from './user.data';
   const emit = defineEmits(['success', 'register']);
+  const dataInfo = reactive({
+    keys: [] as string[],
+    orgId: '',
+    orgName: '',
+  });
   const searchInfo = reactive<Recordable>({ orgId: '' });
   const [registerModal, { setModalProps, closeModal, changeOkLoading }] = useModalInner(
     async (data) => {
       setModalProps({ confirmLoading: false });
+      dataInfo.keys = [];
       dataInfo.orgId = data?.orgId;
       dataInfo.orgName = data?.orgName;
       searchInfo.orgId = dataInfo.orgId;
       reload();
     },
   );
-  const dataInfo = reactive({
-    keys: [] as string[],
-    orgId: '',
-    orgName: '',
-  });
   const getTitle = computed(() =>
     !dataInfo.orgName ? '关联机构' : '关联机构:' + dataInfo.orgName,
   );
