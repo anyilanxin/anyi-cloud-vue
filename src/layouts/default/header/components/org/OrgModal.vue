@@ -29,7 +29,7 @@
   import headerImg from '/@/assets/images/header.jpg';
   const { prefixCls } = useDesign('header-lock-modal');
   const userStore = useUserStore();
-  const [registerForm, { validateFields, resetFields, setFieldsValue }] = useForm({
+  const [registerForm, { validate, resetFields, setFieldsValue }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -60,8 +60,8 @@
   });
 
   async function handleCheckOrg() {
-    const values = await validateFields;
-    userStore.switchOrg(values['orgId']);
+    const values = await validate();
+    userStore.switchOrg(values.orgId);
     // 切换机构
     closeModal();
   }
