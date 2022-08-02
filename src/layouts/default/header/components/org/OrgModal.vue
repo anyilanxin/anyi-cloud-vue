@@ -33,10 +33,11 @@
     showActionButtonGroup: false,
     schemas: [
       {
-        field: 'parentId',
+        field: 'orgId',
         label: '用户机构',
         component: 'ApiTreeSelect',
         componentProps: {
+          allowClear: false,
           fieldNames: {
             label: 'orgName',
             value: 'orgId',
