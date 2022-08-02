@@ -22,6 +22,10 @@ export interface RbacUserPageVo extends BasePageVo {
   keyword: string;
   userStatus: number;
 }
+export interface RbacEnalbeUserPageVo extends BasePageVo {
+  orgId: string;
+  keyword: string;
+}
 
 export interface RbacUserVo {
   userName: string;
@@ -85,4 +89,9 @@ export interface RbacCorrelateRoleVo {
   correlateId: string;
   correlateType: number;
   roleIds: string[];
+}
+
+export interface RbacJoinOrgVo {
+  orgId: string;
+  userIds: string[];
 }
