@@ -38,7 +38,7 @@
     schemas: [
       {
         field: 'parentId',
-        label: '用户当前机构',
+        label: '用户机构',
         component: 'ApiTreeSelect',
         componentProps: {
           fieldNames: {
