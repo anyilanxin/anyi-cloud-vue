@@ -25,9 +25,14 @@
   const selectOrgId = ref('');
   const selectOrgName = ref('');
   async function handleSelect(orgId) {
-    selectOrgId.value = orgId;
-    const orgInfo = await getById(orgId);
-    selectOrgName.value = orgInfo.orgName;
+    if (!orgId) {
+      selectOrgId.value = '';
+      selectOrgName.value = '';
+    } else {
+      selectOrgId.value = orgId;
+      const orgInfo = await getById(orgId);
+      selectOrgName.value = orgInfo.orgName;
+    }
   }
 </script>
 

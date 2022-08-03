@@ -66,7 +66,7 @@
               label: '编辑',
               tooltip: '编辑角色',
               auth: 'update',
-              ifShow: () => record.roleCode !== setting.superRoleCode,
+              ifShow: () => !record.superRole,
               onClick: handleEdit.bind(null, record.orgRoleId),
             },
             {
@@ -87,7 +87,7 @@
             {
               label: '删除',
               auth: 'delete',
-              ifShow: () => record.enableDelete !== 0 && record.roleCode !== setting.superRoleCode,
+              ifShow: () => record.enableDelete !== 0 && !record.superRole,
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record.orgRoleId),
@@ -101,8 +101,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, reactive, watch } from 'vue';
-  import projectSetting from '/@/settings/projectSetting';
+  import { reactive, watch } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import {
     selectPage,
@@ -156,7 +155,6 @@
       align: 'left',
     },
   });
-  const setting = ref(projectSetting);
   const data = reactive({
     meauActions: {},
   });

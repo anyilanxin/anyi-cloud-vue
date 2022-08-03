@@ -74,7 +74,7 @@
               label: '编辑',
               tooltip: '编辑角色',
               auth: 'update',
-              ifShow: () => record.roleCode !== setting.superRoleCode,
+              ifShow: () => !record.superRole,
               onClick: handleEdit.bind(null, record.roleId),
             },
             {
@@ -82,7 +82,7 @@
               label: '授权',
               color: 'success',
               auth: 'apiAuth',
-              ifShow: () => record.roleCode !== setting.superRoleCode,
+              ifShow: () => !record.superRole,
               tooltip: '授予权限',
               onClick: handleAuth.bind(null, record.roleId),
             },
@@ -96,7 +96,7 @@
             {
               label: '删除',
               auth: 'delete',
-              ifShow: () => record.enableDelete !== 0 && record.roleCode !== setting.superRoleCode,
+              ifShow: () => record.enableDelete !== 0 && !record.superRole,
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record.roleId),
@@ -110,8 +110,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
-  import projectSetting from '/@/settings/projectSetting';
+  import { reactive } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { selectPage, deleteById, getMenuActionById } from '/@/api/modules/system/rbac/rbacRole';
   import { useModal } from '/@/components/Modal';
@@ -149,7 +148,6 @@
       align: 'left',
     },
   });
-  const setting = ref(projectSetting);
   const data = reactive({
     meauActions: {},
   });
