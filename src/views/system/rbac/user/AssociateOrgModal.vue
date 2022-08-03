@@ -2,6 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
+    :destroyOnClose="true"
     :title="getTitle"
     :draggable="false"
     @ok="handleSubmit"
