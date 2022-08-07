@@ -177,7 +177,7 @@
     },
   });
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, removeSchemaByFiled, validate }] = useForm({
     labelWidth: 120,
     schemas: accountFormSchema,
     showActionButtonGroup: false,
@@ -244,6 +244,7 @@
         data.authData = userInfo;
         data.orgRoleInfos = userInfo.orgRoleInfos || [];
         data.roleInfos = userInfo.roleInfos || [];
+        removeSchemaByFiled('password');
         setFieldsValue({
           ...data.authData,
         });

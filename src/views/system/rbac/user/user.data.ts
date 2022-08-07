@@ -259,6 +259,9 @@ export const accountFormSchema: FormSchema[] = [
     field: 'password',
     label: '密码',
     component: 'InputPassword',
+    componentProps: {
+      autocomplete: 'new-password',
+    },
     required: true,
   },
   {
