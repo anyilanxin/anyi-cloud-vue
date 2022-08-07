@@ -25,8 +25,12 @@
       </template>
       <template #processDefinitionKeys="{ record }">
         <span>
-          <CopyOutlined class="copy-class" @click="copyInfo(record.processDefinitionKeys)" />
-          {{ record.processDefinitionKeys }}
+          <CopyOutlined
+            class="copy-class"
+            @click="copyInfo(record.processDefinitionKeys)"
+            v-if="record.processDefinitionKeys"
+          />
+          {{ record.processDefinitionKeys || '' }}
         </span>
       </template>
       <template #modelState="{ record }">

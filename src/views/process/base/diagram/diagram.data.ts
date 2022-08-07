@@ -5,6 +5,9 @@ export const columns: BasicColumn[] = [
   {
     title: '模型名称',
     dataIndex: 'diagramNames',
+    customRender: ({ record }) => {
+      return record.diagramNames || '---';
+    },
     fixed: 'left',
     width: 200,
   },
