@@ -4,7 +4,7 @@
 
 vue3、vite、antdesign vue、skillfull platform(micro service web)
 
-当前最新版本： 0.9.9（发布日期：2022-07-25）
+当前最新版本： 1.0.0-alpha2（发布日期：2022-08-07）
 
 ## 技术文档
 
