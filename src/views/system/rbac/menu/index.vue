@@ -63,7 +63,7 @@
               tooltip: '添加下级',
               auth: 'add',
               ifShow: () => record.menuType != 2,
-              onClick: handleEdit.bind(null, record),
+              onClick: handleChild.bind(null, record),
             },
             {
               icon: 'clarity:note-edit-line',
@@ -175,6 +175,14 @@
       isUpdate: true,
       systemId: record.systemId,
       menuId: record.menuId,
+    });
+  }
+  function handleChild(record: any) {
+    openModal(true, {
+      isUpdate: false,
+      systemId: record.systemId,
+      parentId: record.menuId,
+      parentType: record.menuType,
     });
   }
   function getPictureUrl(url: string) {
