@@ -20,6 +20,7 @@
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(false);
   const menuId = ref('');
+  const parentType = ref<any>(null);
   const systemId = ref('');
   const apiGetMenuTree = (params: {
     menuType: string | undefined;
@@ -30,13 +31,14 @@
   };
   const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
     labelWidth: 120,
-    schemas: createFormSchemas(apiGetMenuTree, isUpdate, systemId),
+    schemas: createFormSchemas(apiGetMenuTree, isUpdate, systemId, parentType),
     showActionButtonGroup: false,
     baseColProps: { lg: 12, md: 24 },
   });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     resetFields();
     setModalProps({ confirmLoading: false });
+    parentType.value = null;
     isUpdate.value = !!data?.isUpdate;
     systemId.value = data?.systemId;
     menuId.value = data?.menuId;
@@ -45,6 +47,15 @@
       setFieldsValue({
         ...detailData,
       });
+    } else {
+      const parentId = data?.parentId;
+      parentType.value = data?.parentType;
+      if (parentId) {
+        const detailData = { parentId, menuType: parentType.value + 1 };
+        setFieldsValue({
+          ...detailData,
+        });
+      }
     }
   });
   const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));

@@ -6,7 +6,7 @@ export const columns: BasicColumn[] = [
     title: '名称',
     dataIndex: 'metaTitle',
     fixed: 'left',
-    width: 150,
+    width: 200,
     align: 'left',
   },
   {
@@ -72,7 +72,7 @@ export const columns: BasicColumn[] = [
     fixed: 'right',
     sorter: true,
     dataIndex: 'menuStatus',
-    width: 80,
+    width: 75,
     slots: { customRender: 'menuStatus' },
   },
 ];
@@ -133,7 +133,7 @@ export const searchFormSchema: FormSchema[] = [
 const isDir = (type: number) => type === 0;
 const isMenu = (type: number) => type === 1;
 const isButton = (type: number) => type === 2;
-export function createFormSchemas(api, disable, systemId) {
+export function createFormSchemas(api, disable, systemId, parentType) {
   const accountFormSchema: FormSchema[] = [
     {
       field: 'menuType',
@@ -141,6 +141,24 @@ export function createFormSchemas(api, disable, systemId) {
       component: 'RadioButtonGroup',
       defaultValue: 0,
       componentProps: ({ formModel }) => {
+        let options = [
+          { label: '目录', value: 0, disabled: false },
+          { label: '菜单', value: 1, disabled: false },
+          { label: '按钮', value: 2, disabled: false },
+        ];
+        if (parentType.value == 0) {
+          options = [
+            { label: '目录', value: 0, disabled: false },
+            { label: '菜单', value: 1, disabled: false },
+            { label: '按钮', value: 2, disabled: true },
+          ];
+        } else if (parentType.value == 1) {
+          options = [
+            { label: '目录', value: 0, disabled: true },
+            { label: '菜单', value: 1, disabled: true },
+            { label: '按钮', value: 2, disabled: false },
+          ];
+        }
         return {
           onChange: (_e: ChangeEvent) => {
             formModel.parentId = null;
@@ -152,11 +170,7 @@ export function createFormSchemas(api, disable, systemId) {
               formModel.component = null;
             }
           },
-          options: [
-            { label: '目录', value: 0 },
-            { label: '菜单', value: 1 },
-            { label: '按钮', value: 2 },
-          ],
+          options: options,
         };
       },
       dynamicDisabled: () => {
