@@ -21,6 +21,7 @@
   const isUpdate = ref(false);
   const menuId = ref('');
   const parentType = ref<any>(null);
+  const parentId = ref<any>(null);
   const systemId = ref('');
   const apiGetMenuTree = (params: {
     menuType: string | undefined;
@@ -31,7 +32,7 @@
   };
   const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
     labelWidth: 120,
-    schemas: createFormSchemas(apiGetMenuTree, isUpdate, systemId, parentType),
+    schemas: createFormSchemas(apiGetMenuTree, isUpdate, systemId, parentType, parentId),
     showActionButtonGroup: false,
     baseColProps: { lg: 12, md: 24 },
   });
@@ -39,6 +40,7 @@
     resetFields();
     setModalProps({ confirmLoading: false });
     parentType.value = null;
+    parentId.value = null;
     isUpdate.value = !!data?.isUpdate;
     systemId.value = data?.systemId;
     menuId.value = data?.menuId;
@@ -48,9 +50,9 @@
         ...detailData,
       });
     } else {
-      const parentId = data?.parentId;
+      parentId.value = data?.parentId;
       parentType.value = data?.parentType;
-      if (parentId) {
+      if (parentId.value) {
         const detailData = { parentId, menuType: parentType.value + 1 };
         setFieldsValue({
           ...detailData,

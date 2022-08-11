@@ -133,7 +133,7 @@ export const searchFormSchema: FormSchema[] = [
 const isDir = (type: number) => type === 0;
 const isMenu = (type: number) => type === 1;
 const isButton = (type: number) => type === 2;
-export function createFormSchemas(api, disable, systemId, parentType) {
+export function createFormSchemas(api, disable, systemId, parentType, parentId) {
   const accountFormSchema: FormSchema[] = [
     {
       field: 'menuType',
@@ -161,7 +161,7 @@ export function createFormSchemas(api, disable, systemId, parentType) {
         }
         return {
           onChange: (_e: ChangeEvent) => {
-            formModel.parentId = null;
+            formModel.parentId = parentId.value ? parentId.value : null;
             if (formModel.menuType === 0) {
               formModel.component = 'LAYOUT';
             } else if (formModel.menuType === 1 && formModel.iframe) {
