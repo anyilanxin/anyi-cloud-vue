@@ -163,7 +163,7 @@ export function createClientFormSchema(update) {
     {
       field: 'clientSecurity',
       label: '客户端密码',
-      component: 'Input',
+      component: 'InputPassword',
       required: true,
       ifShow: () => !update.value,
     },
@@ -314,12 +314,14 @@ export function createClientFormSchema(update) {
     {
       field: 'accessTokenValiditySeconds',
       label: 'token有效时长(s)',
+      defaultValue: 1800,
       component: 'InputNumber',
       required: true,
     },
     {
       field: 'refreshTokenValiditySeconds',
       label: '刷新token有效时长(s)',
+      defaultValue: 604800,
       component: 'InputNumber',
       required: true,
       ifShow: ({ values }) =>
@@ -366,6 +368,7 @@ export function createClientFormSchema(update) {
     {
       field: 'codeValiditySeconds',
       label: '授权码有效时常(s)',
+      defaultValue: 300,
       component: 'InputNumber',
       required: true,
       ifShow: ({ values }) =>
