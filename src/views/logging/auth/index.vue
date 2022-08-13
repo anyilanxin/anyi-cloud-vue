@@ -1,10 +1,6 @@
 <template>
   <div>
-    <BasicTable
-      @register="registerTable"
-      @selection-change="handleSelectionChange"
-      @expand="handleExpandedChange"
-    >
+    <BasicTable @register="registerTable" @selection-change="handleSelectionChange">
       <template #toolbar>
         <a-button
           type="primary"
@@ -26,18 +22,9 @@
         >
       </template>
       <template #authStatus="{ record }">
-        <a-badge status="processing" v-if="record.authStatus == 1" text="成功" />
-        <a-badge status="default" v-else-if="record.authStatus == 0" text="失败" />
+        <a-tag color="processing" v-if="record.authStatus == 1"> 成功 </a-tag>
+        <a-tag color="red" v-else>失败</a-tag>
       </template>
-      <!-- <template #expandedRowRender="{ record }">
-        <div style="text-align: center">
-          <a-spin :spinning="data.logInfo[record.authLogId]?.loading" />
-        </div>
-        <template v-if="!data.logInfo[record.authLogId]?.loading">
-          <a-empty v-if="!data.logInfo[record.authLogId]?.data" />
-          <div v-else> {{ data.logInfo[record.authLogId].data.authLogId }}</div>
-        </template>
-      </template> -->
       <template #action="{ record }">
         <TableAction
           stopButtonPropagation
@@ -61,17 +48,13 @@
         />
       </template>
     </BasicTable>
-    <AuthLogModal @register="registerModal" />
   </div>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { selectPage, deleteById, deleteBatchByIds } from '/@/api/modules/logging/manage/authData';
-  import { useModal } from '/@/components/Modal';
-  import AuthLogModal from './AuthLogModal.vue';
   import { columns, searchFormSchema } from './authlog.data';
-  const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
     title: '授权日志列表',
     api: selectPage,
@@ -110,10 +93,7 @@
   });
 
   function handleView(authLogId: string) {
-    openModal(true, {
-      isUpdate: true,
-      authLogId: authLogId,
-    });
+    console.log('------authLogId-------', authLogId);
   }
   async function handleDelete(authLogId: string) {
     await deleteById(authLogId);
@@ -136,19 +116,6 @@
       loading.export = true;
     } finally {
       loading.export = false;
-    }
-  }
-  async function handleExpandedChange(expanded, record) {
-    data.logInfo[record.authLogId] = {
-      data: [],
-      loading: true,
-    };
-    if (expanded) {
-      try {
-        data.logInfo[record.authLogId].data = await getById(record.authLogId);
-      } finally {
-        data.logInfo[record.authLogId].loading = false;
-      }
     }
   }
 </script>

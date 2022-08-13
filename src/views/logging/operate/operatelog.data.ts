@@ -3,24 +3,32 @@ import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
+    title: '操作用户',
+    dataIndex: 'userName',
+    fixed: 'left',
+    customRender: ({ record }) => {
+      return record.userName || '';
+    },
+    width: 150,
+  },
+  {
+    title: '数据来源',
+    dataIndex: 'dataSources',
+    fixed: 'left',
+    width: 150,
+  },
+  {
     title: '日志编号',
     dataIndex: 'logCode',
-    fixed: true,
     width: 180,
   },
   {
     title: '日志类型',
     dataIndex: 'logType',
-    fixed: 'left',
     width: 180,
     customRender: ({ record }) => {
       return record.logTypeDescribe;
     },
-  },
-  {
-    title: '操作用户',
-    dataIndex: 'userName',
-    width: 150,
   },
   {
     title: '请求ip',
@@ -38,11 +46,6 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
-    title: '数据来源',
-    dataIndex: 'dataSourcesDescribe',
-    width: 150,
-  },
-  {
     title: '请求开始时间',
     dataIndex: 'requestStartTime',
     width: 180,
@@ -55,15 +58,16 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '请求耗时',
+    title: '请求耗时(ms)',
     dataIndex: 'costTime',
-    width: 150,
+    sorter: true,
+    width: 120,
   },
   {
     title: '请求状态',
     dataIndex: 'operateStatus',
     fixed: 'right',
-    width: 80,
+    width: 100,
     slots: { customRender: 'operateStatus' },
   },
 ];
