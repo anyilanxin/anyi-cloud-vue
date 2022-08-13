@@ -3,16 +3,19 @@ import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: '日志编号',
-    dataIndex: 'logCode',
+    title: '授权类型',
+    dataIndex: 'authTypeDescribe',
+    sorter: true,
     fixed: 'left',
-    width: 180,
+    width: 130,
   },
   {
     title: '授权用户',
     dataIndex: 'authUserName',
     fixed: 'left',
-    sorter: true,
+    customRender: ({ record }) => {
+      return record.authUserName || '';
+    },
     width: 150,
   },
   {
@@ -27,35 +30,52 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
+    title: '日志编号',
+    dataIndex: 'logCode',
+    customRender: ({ record }) => {
+      return record.logCode || '';
+    },
+    width: 180,
+  },
+  {
     title: '请求ip',
     dataIndex: 'requestIp',
     width: 180,
   },
   {
-    title: '授权类型',
-    dataIndex: 'authTypeDescribe',
-    sorter: true,
-    width: 120,
+    title: 'ip归属',
+    dataIndex: 'ipAddress',
+    width: 180,
   },
   {
-    title: '授权耗时',
-    dataIndex: 'costTime',
-    sorter: true,
-    width: 150,
-  },
-  {
-    title: '授权时间',
+    title: '授权开始时间',
     dataIndex: 'requestStartTime',
     sorter: true,
     defaultSortOrder: 'descend',
     width: 180,
   },
   {
+    title: '授权结束时间',
+    dataIndex: 'requestEndTime',
+    sorter: true,
+    defaultSortOrder: 'descend',
+    width: 180,
+  },
+  {
+    title: '授权耗时',
+    dataIndex: 'costTime',
+    sorter: true,
+    width: 120,
+    customRender: ({ record }) => {
+      return record.costTimeStr;
+    },
+  },
+  {
     title: '授权状态',
     dataIndex: 'authStatus',
     sorter: true,
     fixed: 'right',
-    width: 130,
+    width: 100,
     slots: { customRender: 'authStatus' },
   },
 ];
@@ -107,13 +127,13 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'authUserName',
-    label: '授权用户名称',
+    label: '授权用户',
     component: 'Input',
     colProps: { span: 6 },
   },
   {
     field: 'authClientName',
-    label: '授权客户端名称',
+    label: '授权客户端',
     component: 'Input',
     colProps: { span: 6 },
   },
