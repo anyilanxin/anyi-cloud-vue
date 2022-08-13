@@ -36,11 +36,6 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: 'ip归属',
-    dataIndex: 'ipAddress',
-    width: 180,
-  },
-  {
     title: '请求方法',
     dataIndex: 'requestMethod',
     width: 100,
@@ -63,13 +58,10 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '请求耗时',
+    title: '请求耗时(ms)',
     dataIndex: 'costTime',
     sorter: true,
     width: 120,
-    customRender: ({ record }) => {
-      return record.costTimeStr;
-    },
   },
   {
     title: '请求状态',

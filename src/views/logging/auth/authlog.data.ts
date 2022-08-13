@@ -32,19 +32,11 @@ export const columns: BasicColumn[] = [
   {
     title: '日志编号',
     dataIndex: 'logCode',
-    customRender: ({ record }) => {
-      return record.logCode || '';
-    },
     width: 180,
   },
   {
     title: '请求ip',
     dataIndex: 'requestIp',
-    width: 180,
-  },
-  {
-    title: 'ip归属',
-    dataIndex: 'ipAddress',
     width: 180,
   },
   {
@@ -62,13 +54,10 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '授权耗时',
+    title: '授权耗时(ms)',
     dataIndex: 'costTime',
     sorter: true,
     width: 120,
-    customRender: ({ record }) => {
-      return record.costTimeStr;
-    },
   },
   {
     title: '授权状态',
