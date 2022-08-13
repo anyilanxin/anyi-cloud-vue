@@ -4,7 +4,8 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="40%"
+    :min-height="300"
+    width="45%"
   >
     <div style="padding-right: 10px">
       <a-form :label-col="labelCol" :model="routerPredicatInfo.predicatInfo" ref="formRef">
@@ -144,7 +145,7 @@
   }
   async function getFilterTypes() {
     routerPredicatInfo.predicateSysTypess = await getListByConstantTypes(
-      'gateway-service:PredicateSysType'
+      'gateway-service:PredicateSysType',
     );
     const predicateSysTypesMap = {};
     routerPredicatInfo.predicateSysTypess.map((item) => {

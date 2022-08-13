@@ -4,7 +4,8 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="38%"
+    :min-height="300"
+    width="45%"
   >
     <BasicForm @register="registerForm" style="padding-right: 10px">
       <template #requestMethod="{ model, field }">

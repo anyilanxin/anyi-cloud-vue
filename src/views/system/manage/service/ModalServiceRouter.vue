@@ -4,8 +4,8 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="50%"
-    :minHeight="250"
+    width="60%"
+    :min-height="300"
   >
     <div style="padding-right: 30px">
       <a-form :label-col="labelCol" :model="routerInfos.routerInfo" ref="formRef">
@@ -472,9 +472,11 @@
   .@{prefix-cls} {
     .ant-empty {
       font-size: 12px !important;
+
       .ant-empty-image {
         height: 38px !important;
       }
+
       p {
         margin-bottom: 0px !important;
       }
