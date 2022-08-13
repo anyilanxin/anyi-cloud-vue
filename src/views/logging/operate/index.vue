@@ -23,7 +23,7 @@
       </template>
       <template #operateStatus="{ record }">
         <a-tag color="processing" v-if="record.operateStatus == 1"> 成功 </a-tag>
-        <a-tag color="warning" v-else>失败</a-tag>
+        <a-tag color="red" v-else>失败</a-tag>
       </template>
       <template #action="{ record }">
         <TableAction
