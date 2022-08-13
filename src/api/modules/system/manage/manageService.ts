@@ -94,7 +94,7 @@ export const getById = (serviceId: string) =>
 export const deleteById = (serviceId: string) =>
   defHttp.delete<string>(
     {
-      url: SysUrlPrefix.SYSTEM + '/manage-service/delete/{serviceId}',
+      url: SysUrlPrefix.SYSTEM + '/manage-service/delete-one/{serviceId}',
       params: { serviceId },
     },
     { successMessageMode: 'notification' },

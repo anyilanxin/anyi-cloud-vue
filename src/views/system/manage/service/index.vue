@@ -94,13 +94,13 @@
             },
             {
               label: record.serviceState == 1 ? '禁用' : '启用',
-              onClick: handleView.bind(null, record.modelId),
+              onClick: handleView.bind(null, record.serviceId),
             },
             {
               label: '删除',
               popConfirm: {
                 title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.modelId),
+                confirm: handleDelete.bind(null, record.serviceId),
               },
             },
           ]"
@@ -120,7 +120,12 @@
   import { router } from '/@/router';
   import { columns, searchFormSchema } from './service.data';
   import { useGo } from '/@/hooks/web/usePage';
-  import { selectPage, systemStat, syncGateway } from '/@/api/modules/system/manage/manageService';
+  import {
+    selectPage,
+    systemStat,
+    syncGateway,
+    deleteById,
+  } from '/@/api/modules/system/manage/manageService';
   import { SystemStatDto } from '/@/api/modules/system/manage/model/manageServiceModel';
   import { Alert, Progress } from 'ant-design-vue';
   const go = useGo();
@@ -174,8 +179,9 @@
       id: serviceId,
     });
   }
-  function handleDelete(serviceId: string) {
-    console.log(serviceId);
+  async function handleDelete(serviceId: string) {
+    await deleteById(serviceId);
+    reload();
   }
 
   function handleSuccess({ isUpdate, values }) {
