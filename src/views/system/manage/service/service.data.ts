@@ -376,7 +376,7 @@ export function createSystemFormSchema(enableUrlType) {
     },
     {
       field: 'requestMethod',
-      label: '允许的请求方法',
+      label: '允许请求方法',
       component: 'Select',
       slot: 'requestMethod',
       ifShow: ({ values }) => values.limitMethod === 1,
