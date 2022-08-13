@@ -4,7 +4,8 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="40%"
+    :min-height="300"
+    width="45%"
   >
     <div style="padding-right: 10px">
       <a-form :label-col="labelCol" :model="routerFilterInfo.routerInfo" ref="formRef">

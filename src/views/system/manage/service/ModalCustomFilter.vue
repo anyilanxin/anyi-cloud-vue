@@ -4,8 +4,8 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="50%"
-    :minHeight="250"
+    :min-height="300"
+    width="60%"
   >
     <div style="padding-right: 30px">
       <a-form :label-col="labelCol" :model="filterInfos" ref="formRef">

@@ -62,7 +62,7 @@
     reload();
   });
   const getTitle = computed(() =>
-    serviceName.value ? '服务实例(' + serviceName.value + ')' : '服务实例'
+    serviceName.value ? '服务实例(' + serviceName.value + ')' : '服务实例',
   );
   function handleInstance(record: Recordable, type: number) {
     const data = {
