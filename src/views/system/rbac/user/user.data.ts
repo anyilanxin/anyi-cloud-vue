@@ -1,7 +1,7 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { upload } from '/@/api/modules/storage/storageInfoFile';
-import { selectOrgTreeList } from '/@/api/modules/system/rbac/rbacOrg';
+// import { selectOrgTreeList } from '/@/api/modules/system/rbac/rbacOrg';
 import { DescItem } from '/@/components/Description/index';
 import { unref, h } from 'vue';
 import { Avatar } from 'ant-design-vue';
@@ -213,18 +213,23 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'orgId',
-    label: '所属组织',
-    component: 'ApiTreeSelect',
-    componentProps: {
-      fieldNames: {
-        title: 'orgName',
-        key: 'orgId',
-        value: 'orgId',
-      },
-      api: selectOrgTreeList,
-    },
+    label: '工号',
+    field: 'workNo',
+    component: 'Input',
   },
+  // {
+  //   field: 'orgId',
+  //   label: '所属组织',
+  //   component: 'ApiTreeSelect',
+  //   componentProps: {
+  //     fieldNames: {
+  //       title: 'orgName',
+  //       key: 'orgId',
+  //       value: 'orgId',
+  //     },
+  //     api: selectOrgTreeList,
+  //   },
+  // },
   {
     field: 'userStatus',
     label: '状态',
@@ -249,11 +254,6 @@ export const accountFormSchema: FormSchema[] = [
       width: '33px',
       uploadApi: upload,
     },
-  },
-  {
-    label: '工号',
-    field: 'workNo',
-    component: 'Input',
   },
   {
     field: 'password',
