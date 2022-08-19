@@ -7060,10 +7060,10 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-skillfull-process-pro-antvue@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/skillfull-process-pro-antvue/-/skillfull-process-pro-antvue-1.0.0.tgz#3be454239a1e4ae344d0c151c78fcbc4f4e53c6a"
-  integrity sha512-ViTJiHbjXHOhdUXcu4hHAFQooGtxw/LzLZcKKkzfGV1me8BZDjfbCuDYJpJMt7mYpm8rJdMqvjBOavpQslxSIA==
+skillfull-process-pro-antvue@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/skillfull-process-pro-antvue/-/skillfull-process-pro-antvue-1.1.0.tgz#a03858350a674f853abdbab2850adcf9a784eb3b"
+  integrity sha512-eBZYlSJcOogN5NO5YyRMmoQ90876Of3AKAc3ZxZN83dOzpmzDe9o7lABiQg8ZQu4A6U4AVf+ILDbR0d0THSl/g==
 
 slash@^3.0.0:
   version "3.0.0"
