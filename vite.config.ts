@@ -85,7 +85,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
       // Turning off brotliSize display can slightly reduce packaging time
-      brotliSize: false,
+      reportCompressedSize: false,
       cssCodeSplit: true, //如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
