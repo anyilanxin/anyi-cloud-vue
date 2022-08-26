@@ -16,7 +16,7 @@ import { primaryColor } from '../../build/config/themeConfig';
 // ! You need to clear the browser cache after the change
 const setting: ProjectConfig = {
   systemCode: '',
-  socketApi: 'ws://localhost:1012/api' + SysUrlPrefix.MESSAGE + '/socket',
+  socketApi: SysUrlPrefix.MESSAGE + '/socket',
   // Whether to show the configuration button
   showSettingButton: true,
 
