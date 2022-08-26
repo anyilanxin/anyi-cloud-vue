@@ -80,6 +80,8 @@ export interface TransitionSetting {
 }
 
 export interface ProjectConfig {
+  // websocket链接地址
+  socketApi: string;
   // 获取菜单的系统编码,空着表示所有
   systemCode: string;
   // Storage location of permission related information
@@ -150,6 +152,8 @@ export interface GlobConfig {
   shortName: string;
   // request timeout
   timeout?: number;
+  // 关闭websocket
+  openSocket: boolean;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -174,4 +178,6 @@ export interface GlobEnvConfig {
   VITE_GLOB_ENABLE_GRAY: boolean;
   // 灰度信息地址读取开关(灰度开关打开时有效)
   VITE_GLOB_ADDRESS_GRAY: boolean;
+  // open websocket
+  VITE_GLOB_OPEN_SOCKET: boolean;
 }
