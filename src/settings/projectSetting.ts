@@ -1,6 +1,7 @@
 import type { ProjectConfig } from '/#/config';
 import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '/@/enums/menuEnum';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
+import { SysUrlPrefix } from '/@/api/sysPrefix';
 import {
   ContentEnum,
   PermissionModeEnum,
@@ -15,6 +16,7 @@ import { primaryColor } from '../../build/config/themeConfig';
 // ! You need to clear the browser cache after the change
 const setting: ProjectConfig = {
   systemCode: '',
+  socketApi: SysUrlPrefix.MESSAGE + '/socket',
   // Whether to show the configuration button
   showSettingButton: true,
 
