@@ -12,8 +12,7 @@
   import { AppProvider } from '/@/components/Application';
   import { useTitle } from '/@/hooks/web/useTitle';
   import { useLocale } from '/@/locales/useLocale';
-  import { connectWebSocket, onWebSocket } from '/@/hooks/web/useWebSocket';
-
+  import { onWebSocket, SocketMessageEvent } from '/@/hooks/web/useWebSocket';
   import 'dayjs/locale/zh-cn';
   // support Multi-language
   const { getAntdLocale } = useLocale();
@@ -21,10 +20,9 @@
   // Listening to page changes and dynamically changing site titles
   useTitle();
   onMounted(() => {
-    connectWebSocket();
-    onWebSocket(onWebSocketMessage);
+    onWebSocket(onWebSocketMessage, SocketMessageEvent.ERROR_EVENT);
   });
   function onWebSocketMessage(data: any) {
-    console.log('--------data------------', data);
+    console.log('--------data-----app-------', data);
   }
 </script>

@@ -163,7 +163,7 @@ const transform: AxiosTransform = {
       (config as Recordable)?.requestOptions?.withToken !== false
     ) {
       // jwt token
-      config.headers['Authorization'] = 'Bearer ' + token.access_token;
+      config.headers[token['bearer_token_header_name']] = 'Bearer ' + token.access_token;
     }
     config.headers['X-Request-Id'] = buildShortUUID();
     // 多语言后端支持

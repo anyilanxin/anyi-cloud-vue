@@ -12,6 +12,10 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     VITE_GLOB_UPLOAD_URL,
     // 打开websocket
     VITE_GLOB_OPEN_SOCKET,
+    // socket地址
+    VITE_GLOB_SOCKET_URL,
+    // 系统编码
+    VITE_GLOB_SYSTEM_CODE,
   } = getAppEnvConfig();
 
   if (!/[a-zA-Z\_]*/.test(VITE_GLOB_APP_SHORT_NAME)) {
@@ -29,6 +33,10 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     uploadUrl: VITE_GLOB_UPLOAD_URL,
     // 打开websocket
     openSocket: (VITE_GLOB_OPEN_SOCKET as unknown as string) == 'true' ? true : false,
+    // socket地址
+    socketApi: VITE_GLOB_SOCKET_URL,
+    // 系统编码
+    systemCode: VITE_GLOB_SYSTEM_CODE,
   };
   return glob as Readonly<GlobConfig>;
 };
