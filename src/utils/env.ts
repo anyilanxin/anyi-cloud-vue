@@ -30,6 +30,10 @@ export function getAppEnvConfig() {
     VITE_GLOB_UPLOAD_URL,
     //  打开websocket
     VITE_GLOB_OPEN_SOCKET,
+    // socket地址
+    VITE_GLOB_SOCKET_URL,
+    // 系统编码
+    VITE_GLOB_SYSTEM_CODE,
   } = ENV;
 
   if (!/^[a-zA-Z\_]*$/.test(VITE_GLOB_APP_SHORT_NAME)) {
@@ -46,6 +50,10 @@ export function getAppEnvConfig() {
     VITE_GLOB_UPLOAD_URL,
     //  打开websocket
     VITE_GLOB_OPEN_SOCKET,
+    // socket地址
+    VITE_GLOB_SOCKET_URL,
+    // 系统编码
+    VITE_GLOB_SYSTEM_CODE,
   };
 }
 

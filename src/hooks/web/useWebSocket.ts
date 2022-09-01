@@ -1,7 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 import { useGlobSetting } from '/@/hooks/setting';
-import projectSetting from '/@/settings/projectSetting';
-import { computed, ref, unref } from 'vue';
+import { computed, ref, unref, nextTick } from 'vue';
+import { SysUrlPrefix } from '/@/api/sysPrefix';
+import { useUserStore } from '/@/store/modules/user';
+// import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
 import { useWebSocket, UseWebSocketReturn } from '@vueuse/core';
 import { getTokenInfo } from '/@/utils/auth';
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -9,10 +11,45 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 
 const { createErrorModal } = useMessage();
+export enum SocketMessageEvent {
+  'AUTH_EVENT' = 'AUTH_EVENT',
+  'ERROR_EVENT' = 'ERROR_EVENT',
+  'NOTICE_EVENT' = 'NOTICE_EVENT',
+  'BUSINESS_EVENT' = 'BUSINESS_EVENT',
+  'ALL_EVENT' = 'ALL_EVENT',
+}
+export interface AuthMsgModel {
+  data: string;
+}
+export interface BusinessMsgModel {
+  data: string;
+}
+export interface ErrorMsgModel {
+  data: string;
+}
+export interface NoticeMsgModel {
+  data: string;
+  dataType: number;
+  type: number;
+  showType: number;
+  noticeShowType?: number;
+}
+export interface SocketMsgModel {
+  data: AuthMsgModel | BusinessMsgModel | ErrorMsgModel | NoticeMsgModel;
+  messageEvent: SocketMessageEvent;
+  type: number;
+}
 
 const result = ref<UseWebSocketReturn<any>>();
 
-const listeners = new Map();
+const listeners = {
+  AUTH_EVENT: new Set<Function>(),
+  ERROR_EVENT: new Set<Function>(),
+  NOTICE_EVENT: new Set<Function>(),
+  BUSINESS_EVENT: new Set<Function>(),
+  UP_DOWN: new Set<Function>(),
+  ALL_EVENT: new Set<Function>(),
+};
 
 /**
  * 开启 WebSocket 链接，全局只需执行一次
@@ -20,6 +57,7 @@ const listeners = new Map();
 export function connectWebSocket() {
   const globSetting = useGlobSetting();
   const openSocket = globSetting.openSocket;
+  // const { getShowNotice } = useHeaderSetting();
   if (!unref(getIsOpen) && openSocket) {
     const server = getSocketUrl();
     if (!server) {
@@ -66,9 +104,9 @@ function getSocketUrl() {
     return '';
   }
   const globSetting = useGlobSetting();
-  let socketUrl = projectSetting.socketApi || '';
+  let socketUrl = globSetting.socketApi || '';
   if (socketUrl && socketUrl.indexOf('ws') < 0 && socketUrl.indexOf('wss') < 0) {
-    socketUrl = globSetting.urlPrefix + globSetting.apiUrl + socketUrl;
+    socketUrl = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.MESSAGE + socketUrl;
     socketUrl = socketUrl;
     const location = window.location;
     if (location.protocol == 'http:') {
@@ -77,7 +115,7 @@ function getSocketUrl() {
       socketUrl = 'wss://' + location.host + socketUrl;
     }
   }
-  return socketUrl + '?access_token=' + token.access_token;
+  return socketUrl + '?' + token['token_query_name'] + '=' + token.access_token;
 }
 
 /**
@@ -93,7 +131,7 @@ function onOpen() {
 function onClose(e) {
   console.log('[WebSocket] 连接断开：', e);
   // 如果登录过期则断开链接
-  if (e.code == 4001) {
+  if (e.code == 4001 || e.code == 4002 || e.code == 4003) {
     const userStore = useUserStoreWithOut();
     const { t } = useI18n();
     const errMessage = e.reason || 'token无效';
@@ -124,6 +162,10 @@ function onClose(e) {
       userStore.setTokenInfo(null);
       userStore.setSessionTimeout(true);
     }, secondsToGo * 1000);
+  } else {
+    // 调一次获取用户信息以免token在网关鉴权失败
+    const userStore = useUserStore();
+    userStore.getUserAndAuth();
   }
 }
 
@@ -147,13 +189,24 @@ function onMessage(e: any) {
   }
   try {
     const data = JSON.parse(e.data);
-    for (const callback of listeners.keys()) {
-      try {
-        callback(data);
-      } catch (err) {
-        console.error(err);
+    const messageEvent = data.messageEvent;
+    nextTick(() => {
+      const eventListenerAll: Set<Function> = listeners['ALL_EVENT'];
+      const specificEventListeners: Set<Function> = listeners[messageEvent];
+      if (specificEventListeners.size > 0) {
+        specificEventListeners.forEach((item) => eventListenerAll.add(item));
       }
-    }
+      for (const callback of eventListenerAll) {
+        try {
+          const messageData = data.data;
+          callback(messageData);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    });
+
+    // 所有监听类型
   } catch (err) {
     console.error('[WebSocket] data解析失败：', err);
   }
@@ -168,10 +221,17 @@ export const getIsOpen = computed(() => unref(result.value?.status) == 'OPEN');
  * 添加 WebSocket 消息监听
  * @param callback
  */
-export function onWebSocket(callback: (data: object) => any) {
-  if (!listeners.has(callback)) {
+export function onWebSocket(callback: (data: object) => any, messageEvent?: SocketMessageEvent) {
+  let eventListener: Set<Function> = listeners['ALL_EVENT'];
+  if (messageEvent) {
+    const nowEventListener = listeners[messageEvent];
+    if (nowEventListener) {
+      eventListener = nowEventListener;
+    }
+  }
+  if (!eventListener.has(callback)) {
     if (typeof callback === 'function') {
-      listeners.set(callback, null);
+      eventListener.add(callback);
     } else {
       console.debug('[WebSocket] 添加 WebSocket 消息监听失败：传入的参数不是一个方法');
     }
@@ -183,8 +243,14 @@ export function onWebSocket(callback: (data: object) => any) {
  *
  * @param callback
  */
-export function offWebSocket(callback: (data: object) => any) {
-  listeners.delete(callback);
+export function offWebSocket(callback: (data: object) => any, messageEvent?: SocketMessageEvent) {
+  let eventListener: Set<Function>;
+  if (messageEvent) {
+    eventListener = listeners[messageEvent];
+  } else {
+    eventListener = listeners['ALL_EVENT'];
+  }
+  eventListener.delete(callback);
 }
 
 export function useWebSocketResult() {

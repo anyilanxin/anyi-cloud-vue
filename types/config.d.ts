@@ -80,10 +80,6 @@ export interface TransitionSetting {
 }
 
 export interface ProjectConfig {
-  // websocket链接地址
-  socketApi: string;
-  // 获取菜单的系统编码,空着表示所有
-  systemCode: string;
   // Storage location of permission related information
   permissionCacheType: CacheTypeEnum;
   // Whether to show the configuration button
@@ -154,6 +150,10 @@ export interface GlobConfig {
   timeout?: number;
   // 关闭websocket
   openSocket: boolean;
+  // socket 地址
+  socketApi: string;
+  // 系统编码
+  systemCode: string;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -180,4 +180,8 @@ export interface GlobEnvConfig {
   VITE_GLOB_ADDRESS_GRAY: boolean;
   // open websocket
   VITE_GLOB_OPEN_SOCKET: boolean;
+  // socket地址
+  VITE_GLOB_SOCKET_URL: string;
+  // 系统编码
+  VITE_GLOB_SYSTEM_CODE: string;
 }

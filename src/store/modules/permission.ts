@@ -1,5 +1,5 @@
 import type { AppRouteRecordRaw, Menu } from '/@/router/types';
-
+import { useGlobSetting } from '/@/hooks/setting';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
 // import { useI18n } from '/@/hooks/web/useI18n';
@@ -185,8 +185,11 @@ export const usePermissionStore = defineStore({
           try {
             // this.changePermissionCode();
             // 加载路由前获取用户信息
+            const globSetting = useGlobSetting();
             await userStore.getUserAndAuth(orgId);
-            routeList = (await getRouterInfoTree(projectSetting.systemCode)) as AppRouteRecordRaw[];
+            routeList = (await getRouterInfoTree(
+              globSetting.systemCode || '',
+            )) as AppRouteRecordRaw[];
           } catch (error) {
             console.error(error);
           }

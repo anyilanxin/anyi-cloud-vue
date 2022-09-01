@@ -108,7 +108,30 @@ export function getAttachmentUrl(url: string) {
     const token = getTokenInfo();
     url = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + url;
     if (token && Object.keys(token).length > 0) {
-      url = url + '?' + token['query_key'] + '=' + token['access_token'];
+      url = url + '?' + token['token_query_name'] + '=' + token['access_token'];
+    }
+  }
+  return url;
+}
+
+export function getAttachmentDomainUrl(url: string) {
+  // 不是https、http以及base64图片
+  if (
+    url &&
+    url.indexOf('https') < 0 &&
+    url.indexOf('http') < 0 &&
+    url.indexOf('data:image/') < 0
+  ) {
+    const token = getTokenInfo();
+    url = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + url;
+    if (token && Object.keys(token).length > 0) {
+      url =
+        window.location.origin +
+        url +
+        '?' +
+        token['token_query_name'] +
+        '=' +
+        token['access_token'];
     }
   }
   return url;
