@@ -137,6 +137,15 @@ export function getAttachmentDomainUrl(url: string) {
   return url;
 }
 
+export function getAuthHeader() {
+  const token = getTokenInfo();
+  const headers = {};
+  if (token && Object.keys(token).length > 0) {
+    headers[token['bearer_token_header_name']] = 'Bearer ' + token['access_token'];
+  }
+  return headers;
+}
+
 /**
  * 字符串转base64
  * @param {*} str

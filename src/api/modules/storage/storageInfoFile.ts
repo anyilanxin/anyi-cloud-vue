@@ -3,8 +3,7 @@ import { UploadFileParams } from '/#/axios';
 import { SysUrlPrefix } from '/@/api/sysPrefix';
 import { StorageInfoModel } from './model/storageInfoFileModel';
 import { useGlobSetting } from '/@/hooks/setting';
-import { getTokenInfo } from '/@/utils/auth';
-const globSetting = useGlobSetting();
+import { getAuthHeader } from '/@/utils';
 
 /**
  * @description: Upload interface
@@ -38,6 +37,7 @@ export function uploadFile(params: any) {
  * @description: 获取上传action
  */
 export function getUploadAction() {
+  const globSetting = useGlobSetting();
   return globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + '/storage-file/upload';
 }
 
@@ -45,10 +45,5 @@ export function getUploadAction() {
  * @description: 获取上传请求头
  */
 export function getUploadHeaders() {
-  const token = getTokenInfo();
-  const headers = {};
-  if (token && Object.keys(token).length > 0) {
-    headers['Authorization'] = 'Bearer ' + token.access_token;
-  }
-  return headers;
+  return getAuthHeader();
 }
