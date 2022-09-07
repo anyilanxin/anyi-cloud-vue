@@ -4,7 +4,6 @@ import { SysUrlPrefix } from '/@/api/sysPrefix';
 import { StorageInfoModel } from './model/storageInfoFileModel';
 import { useGlobSetting } from '/@/hooks/setting';
 import { getAuthHeader } from '/@/utils';
-const globSetting = useGlobSetting();
 
 /**
  * @description: Upload interface
@@ -38,6 +37,7 @@ export function uploadFile(params: any) {
  * @description: 获取上传action
  */
 export function getUploadAction() {
+  const globSetting = useGlobSetting();
   return globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + '/storage-file/upload';
 }
 
