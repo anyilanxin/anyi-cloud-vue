@@ -106,9 +106,11 @@ export function getAttachmentUrl(url: string) {
     url.indexOf('data:image/') < 0
   ) {
     const token = getTokenInfo();
+    const params = urlParamsToJson(url);
     url = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + url;
     if (token && Object.keys(token).length > 0) {
-      url = url + '?' + token['token_query_name'] + '=' + token['access_token'];
+      params[token['token_query_name']] = token['access_token'];
+      url = setObjToUrlParams(url.split('?')[0], params);
     }
   }
   return url;
@@ -123,15 +125,11 @@ export function getAttachmentDomainUrl(url: string) {
     url.indexOf('data:image/') < 0
   ) {
     const token = getTokenInfo();
+    const params = urlParamsToJson(url);
     url = globSetting.urlPrefix + globSetting.apiUrl + SysUrlPrefix.STORAGE + url;
     if (token && Object.keys(token).length > 0) {
-      url =
-        window.location.origin +
-        url +
-        '?' +
-        token['token_query_name'] +
-        '=' +
-        token['access_token'];
+      params[token['token_query_name']] = token['access_token'];
+      url = setObjToUrlParams(window.location.origin + url.split('?')[0], params);
     }
   }
   return url;
@@ -144,6 +142,22 @@ export function getAuthHeader() {
     headers[token['bearer_token_header_name']] = 'Bearer ' + token['access_token'];
   }
   return headers;
+}
+
+function urlParamsToJson(urlInfo: string) {
+  const obj = {};
+  const p = urlInfo.split('?');
+  if (p.length > 1) {
+    const params = p[1];
+    const keyValue = params.split('&');
+    for (let i = 0; i < keyValue.length; i++) {
+      const item = keyValue[i].split('=');
+      const key = item[0];
+      const value = item[1];
+      obj[key] = value;
+    }
+  }
+  return obj;
 }
 
 /**
