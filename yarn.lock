@@ -973,13 +973,13 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@bpmn-io/element-templates-validator@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@bpmn-io/element-templates-validator/-/element-templates-validator-0.9.0.tgz#7cc82849610bf182e15b59487e48150d268af656"
-  integrity sha512-oS5eaXPKxl5bV8x4dJYPCWJpWMumr16TTS39S1oJEh/bKke/nhMBuhsk6wWCp7+G3jWWDkUcS1jGAAaKtvQneA==
+"@bpmn-io/element-templates-validator@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@bpmn-io/element-templates-validator/-/element-templates-validator-0.10.0.tgz#5771ca26645303d7e0905f0e2c848e551ae75ca5"
+  integrity sha512-dQFJDCh2u3YhlGW2V/YBe3OaO15Sq4sx6GZYiO/eUK9SCvvD/iwObliHs9Z1LkTzOITel+J8nS5Yoaab+E2QRw==
   dependencies:
-    "@camunda/element-templates-json-schema" "^0.10.0"
-    "@camunda/zeebe-element-templates-json-schema" "^0.5.0"
+    "@camunda/element-templates-json-schema" "^0.10.1"
+    "@camunda/zeebe-element-templates-json-schema" "^0.6.0"
     json-source-map "^0.6.1"
     min-dash "^3.8.1"
 
@@ -990,11 +990,12 @@
   dependencies:
     min-dash "^3.8.1"
 
-"@bpmn-io/feel-editor@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@bpmn-io/feel-editor/-/feel-editor-0.1.0.tgz#1c7c635731f332f0146e46827182146f72263c6d"
-  integrity sha512-jH7mMXLaQcwbDXgUECjzYHp1BvAdzOfVXVcYOnFnR9kHu9AD7fVfPDkwgm2f8hspYqqEeakS28gyu7EAZU/iSg==
+"@bpmn-io/feel-editor@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@bpmn-io/feel-editor/-/feel-editor-0.3.0.tgz#cd7d4476de388d65ce86ddd25ab80edbc1504f99"
+  integrity sha512-TPDDc2vCALrMletpBos+jM7d96Qp+RWEa3D95H/4EbbDr3+kyqjUy1Omp/+yQGC4a5ryBRrEwAGHbkoAPwwbIQ==
   dependencies:
+    "@codemirror/autocomplete" "^6.0.3"
     "@codemirror/commands" "^6.0.0"
     "@codemirror/language" "^6.0.0"
     "@codemirror/lint" "^6.0.0"
@@ -1003,26 +1004,36 @@
     "@lezer/highlight" "^1.0.0"
     lezer-feel "^0.4.0"
 
-"@bpmn-io/properties-panel@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@bpmn-io/properties-panel/-/properties-panel-0.17.0.tgz#37ffc3507702ae2e512a348fb4c0b206ce0e18e9"
-  integrity sha512-sl9f42erzIhhYDjnmf0uIRveQIutVU4p3JjGVHJd3Vq3PerxgDVHEkTEHhAEoTucwXlCt9XzGv4G7vNY1SnXrw==
+"@bpmn-io/properties-panel@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@bpmn-io/properties-panel/-/properties-panel-0.21.0.tgz#dea72551721d706efbbf207eeb6ca77d2db40036"
+  integrity sha512-y9R6vMBFKNL2de4AAP8ep5X8temJMWHfDMTfMHM63G9oKhwEu15Q3Lidm3JmnobT7vUK3POugZJ/ZNK5Ko8igQ==
   dependencies:
-    "@bpmn-io/feel-editor" "0.1.0"
+    "@bpmn-io/feel-editor" "0.3.0"
     classnames "^2.3.1"
-    diagram-js "^8.1.2"
-    min-dash "^3.7.0"
-    min-dom "^3.1.3"
+    diagram-js "^8.9.0"
+    min-dash "^3.8.1"
+    min-dom "^3.2.1"
 
-"@camunda/element-templates-json-schema@^0.10.0":
+"@camunda/element-templates-json-schema@^0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@camunda/element-templates-json-schema/-/element-templates-json-schema-0.10.1.tgz#2d27f402f170e730c90b98a938c64b87519097d4"
   integrity sha512-sw8RNecjQgY7tX26PMLRJGNX/2QCnlwCvZfxQWh606qlJZsLbpvEbvfgIGCRoYlHYTlsP6PxVcWYx5LPo7yisg==
 
-"@camunda/zeebe-element-templates-json-schema@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@camunda/zeebe-element-templates-json-schema/-/zeebe-element-templates-json-schema-0.5.0.tgz#dbcc178bf81d90eecc3cfa10200fac8dd7d9d65b"
-  integrity sha512-BVHVl4cuK9LxL1eDSdWs8AzuZd981/+CPkw7xlwcB1Xkn6Di8E2iRbDUCBhOIqkahjJYq957nVtbM6jlqXX5qw==
+"@camunda/zeebe-element-templates-json-schema@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@camunda/zeebe-element-templates-json-schema/-/zeebe-element-templates-json-schema-0.6.0.tgz#3eded2b64fff6b40372bfa6aef7f684460ff7cfc"
+  integrity sha512-qawIFM52lp1hW2vWrHaX8ywguZsp2olE0DRTHUY+KWH5GwszZwGWECP3tji1KVih2TasQyf28kcQVh8TeQ6dAg==
+
+"@codemirror/autocomplete@^6.0.3":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@codemirror/autocomplete/-/autocomplete-6.2.0.tgz#f7205f8281613f77529f07b279ee25e1a5d20124"
+  integrity sha512-yNCm2CEE4kE4L2Sf7WeyCej1Q3951ccaCWfomrlBkoERKCss+TzuEeqGe5VnAJTEybLy1yzf1BdMUY/988bfpg==
+  dependencies:
+    "@codemirror/language" "^6.0.0"
+    "@codemirror/state" "^6.0.0"
+    "@codemirror/view" "^6.0.0"
+    "@lezer/common" "^1.0.0"
 
 "@codemirror/commands@^6.0.0":
   version "6.1.0"
@@ -2747,12 +2758,12 @@ bpmn-js-differ@^2.0.2:
     diffpatch "^0.5.1"
     min-dash "^3.0.0"
 
-bpmn-js-properties-panel@^1.4.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/bpmn-js-properties-panel/-/bpmn-js-properties-panel-1.5.0.tgz#4d03a3091aad133402744d96b77e78dca354a232"
-  integrity sha512-0VAPk6xK/u+GepjGjt8HAXtBa2ab5o4Dkn5II8UgnFMoQThpvrsLras3vh1il8j/2vPhngAsfiA8z7Y9nJ6/Hw==
+bpmn-js-properties-panel@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/bpmn-js-properties-panel/-/bpmn-js-properties-panel-1.6.1.tgz#48b78472d322c98d7e23914a2ef68744e3bfb6ce"
+  integrity sha512-DnR/FVvh9d7HsMugfHN/ZrEsLICCxykamrfd7FzF2//vQP9VYJtWncxLn/4KPIGxNHmjNBYMfRg6RDpaw+sWaw==
   dependencies:
-    "@bpmn-io/element-templates-validator" "^0.9.0"
+    "@bpmn-io/element-templates-validator" "^0.10.0"
     "@bpmn-io/extract-process-variables" "^0.5.0"
     array-move "^3.0.1"
     classnames "^2.3.1"
@@ -2771,10 +2782,10 @@ bpmn-js-token-simulation@^0.27.0:
     min-dom "^3.1.3"
     randomcolor "^0.6.2"
 
-bpmn-js@^9.3.2:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-9.4.0.tgz#3f0898fc811a6dfd913293743c1570d1437deffc"
-  integrity sha512-7dusZBYCFognA0TmspWaKZ47UjFhyRT+//hMdyLtPCKY1M0uAPXHoFv73MohlsEa7a75h0q6zjCj5W0/RHBwvg==
+bpmn-js@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-10.0.0.tgz#8e1ef79b403fdc2dbea3b21f211c1486160ce1b0"
+  integrity sha512-H+4cn3HzbVPBpwks22cuSw+k6I6wwPJOm9sRifwpzgAS3zuv0XeWM8a6PQpsxfkUvJ77N3fpgBKlBEvWkTL6fA==
   dependencies:
     bpmn-moddle "^7.1.3"
     css.escape "^1.5.1"
@@ -2955,12 +2966,18 @@ camelcase@^6.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-camunda-bpmn-moddle@^6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/camunda-bpmn-moddle/-/camunda-bpmn-moddle-6.1.2.tgz#b9b9f77b2981745f26b72a9f0267ea7115cc13d0"
-  integrity sha512-DfhOTeq8oN01cB5sLE6Rq34/9xGD15/Y14pEM+YBIjgvV6Rclh+BgIa/2aRMm8An4Kc/itm2tECYiDr8p/FyTQ==
+camunda-bpmn-js-behaviors@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/camunda-bpmn-js-behaviors/-/camunda-bpmn-js-behaviors-0.2.0.tgz#e2e8ebb1fd8f2e12071879e9afd58d0552637cf3"
+  integrity sha512-pIaSLBUfJSObCBvfH2WHPTzZbdW4rV0vN4PObyXX1iqy0idKy2uJURQj/lLy7cGmZAWO4GVpDuco8+f8WzH9HA==
   dependencies:
+    ids "^1.0.0"
     min-dash "^3.8.1"
+
+camunda-bpmn-moddle@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/camunda-bpmn-moddle/-/camunda-bpmn-moddle-7.0.1.tgz#07a2ae8278996e0704fd1277c97548218f64c1bd"
+  integrity sha512-Br8Diu6roMpziHdpl66Dhnm0DTnCFMrSD9zwLV08LpD52QA0UsXxU87XfHf08HjuB7ly0Hd1bvajZRpf9hbmYQ==
 
 caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001370:
   version "1.0.30001373"
@@ -3874,7 +3891,7 @@ diagram-js-minimap@^2.1.1:
     min-dom "^3.1.1"
     tiny-svg "^2.2.2"
 
-diagram-js@^8.1.2, diagram-js@^8.7.1, diagram-js@^8.9.0:
+diagram-js@^8.1.2, diagram-js@^8.9.0:
   version "8.9.0"
   resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-8.9.0.tgz#851e8bda1a97d0e2995a3c853691cd4261a1777b"
   integrity sha512-577bUEbkwZ7id4SCXcD2qrlKoRPXry2SDSPt5T6tEOjwKrTllKr5d1HZoJzGws4VMQq5fmY51Gce1iFT9S4Dlw==
@@ -3889,10 +3906,30 @@ diagram-js@^8.1.2, diagram-js@^8.7.1, diagram-js@^8.9.0:
     path-intersection "^2.2.1"
     tiny-svg "^2.2.2"
 
+diagram-js@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-9.0.0.tgz#0b4e9d8538e7f5eb32366d04ef87b7e6040edd89"
+  integrity sha512-lZorI/9FlTqUf0l8xzjtd5xnIHkOcpZ/QJpjiuE4YPY05Ikp80O2W/GeS8utSfQkSbPrAjGd5LICpWYLF7adSg==
+  dependencies:
+    css.escape "^1.5.1"
+    didi "^9.0.0"
+    hammerjs "^2.0.1"
+    inherits-browser "0.0.1"
+    min-dash "^3.5.2"
+    min-dom "^3.2.0"
+    object-refs "^0.3.0"
+    path-intersection "^2.2.1"
+    tiny-svg "^2.2.2"
+
 didi@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/didi/-/didi-8.0.1.tgz#c49d2daaa041e535c916daaf90cb1381cafb0492"
   integrity sha512-7oXiXbp8DHE3FfQsVBkc2pwePo3Jy2uyGS9trAeBmfxiZAP4WV23LWokRpMmyl3hlu8OEAsyMxx19i5P6TVaJQ==
+
+didi@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/didi/-/didi-9.0.0.tgz#f127477d098a60329a80638333924c15291f8496"
+  integrity sha512-bOZ7WAah3t8TxKV81pbIivHjWyABot49YXG1M3QztnUlZDHz3MRNJ1nZO87JbqrkqNI/2GR4ncHfXdGIP9LX+w==
 
 diff-match-patch@^1.0.0, diff-match-patch@^1.0.5:
   version "1.0.5"
@@ -6380,7 +6417,7 @@ mimic-fn@^2.1.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
-min-dash@^3.0.0, min-dash@^3.5.2, min-dash@^3.7.0, min-dash@^3.8.0, min-dash@^3.8.1:
+min-dash@^3.0.0, min-dash@^3.5.2, min-dash@^3.8.0, min-dash@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/min-dash/-/min-dash-3.8.1.tgz#09a8bd8a041d65eec4732042cde9cb24a6e84b0d"
   integrity sha512-evumdlmIlg9mbRVPbC4F5FuRhNmcMS5pvuBUbqb1G9v09Ro0ImPEgz5n3khir83lFok1inKqVDjnKEg3GpDxQg==
@@ -7745,28 +7782,29 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-skillfull-process-pro-antvue@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/skillfull-process-pro-antvue/-/skillfull-process-pro-antvue-1.2.0.tgz#6c503be915225a892a091b7c238daef10933297e"
-  integrity sha512-5FBLRph5x6eZAudbZkEIgVq8pfEOpPJ5hZt4Hzf6TSkHDZZRIidu/DxFbAVQ+gG0ps8W0KIEQvyH/3zdNqVfdg==
+skillfull-process-pro-antvue@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/skillfull-process-pro-antvue/-/skillfull-process-pro-antvue-1.2.2.tgz#e0790e2d3821993482bf463f064a7b06c2dbd6bf"
+  integrity sha512-gdokqff5YoF516jvyWUoK2ETp1dy5lruIhTZSN852jITqLKP19ColZjy1OmU2fzRXh4eu5CAR28MqHi5uKXeLw==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.0.1"
-    "@bpmn-io/properties-panel" "^0.17.0"
+    "@bpmn-io/properties-panel" "^0.21.0"
     "@highlightjs/vue-plugin" "^2.1.0"
     "@vueuse/core" "^8.6.0"
     ant-design-vue "^3.2.10"
     axios "^0.27.2"
-    bpmn-js "^9.3.2"
+    bpmn-js "^10.0.0"
     bpmn-js-bpmnlint "^0.19.0"
     bpmn-js-color-picker "^0.4.0"
     bpmn-js-differ "^2.0.2"
-    bpmn-js-properties-panel "^1.4.0"
+    bpmn-js-properties-panel "^1.6.1"
     bpmn-js-token-simulation "^0.27.0"
     bpmnlint "^7.8.0"
     bpmnlint-loader "^0.1.5"
-    camunda-bpmn-moddle "^6.1.2"
-    diagram-js "^8.7.1"
+    camunda-bpmn-js-behaviors "^0.2.0"
+    camunda-bpmn-moddle "^7.0.1"
+    diagram-js "^9.0.0"
     diagram-js-minimap "^2.1.1"
     highlight.js "^11.5.1"
     ids "^1.0.0"
@@ -8909,6 +8947,18 @@ vite-plugin-windicss@^1.8.4:
     kolorist "^1.5.1"
     windicss "^3.5.6"
 
+vite@3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.9.tgz#45fac22c2a5290a970f23d66c1aef56a04be8a30"
+  integrity sha512-waYABTM+G6DBTCpYAxvevpG50UOlZuynR0ckTK5PawNVt7ebX6X7wNXHaGIO6wYYFXSM7/WcuFuO2QzhBB6aMw==
+  dependencies:
+    esbuild "^0.14.47"
+    postcss "^8.4.16"
+    resolve "^1.22.1"
+    rollup ">=2.75.6 <2.77.0 || ~2.77.0"
+  optionalDependencies:
+    fsevents "~2.3.2"
+
 vite@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.3.tgz#c7b2ed9505a36a04be1d5d23aea4ea6fc028043f"
@@ -8918,18 +8968,6 @@ vite@^3.0.0:
     postcss "^8.4.14"
     resolve "^1.22.1"
     rollup "^2.75.6"
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-vite@^3.0.7:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.9.tgz#45fac22c2a5290a970f23d66c1aef56a04be8a30"
-  integrity sha512-waYABTM+G6DBTCpYAxvevpG50UOlZuynR0ckTK5PawNVt7ebX6X7wNXHaGIO6wYYFXSM7/WcuFuO2QzhBB6aMw==
-  dependencies:
-    esbuild "^0.14.47"
-    postcss "^8.4.16"
-    resolve "^1.22.1"
-    rollup ">=2.75.6 <2.77.0 || ~2.77.0"
   optionalDependencies:
     fsevents "~2.3.2"
 
