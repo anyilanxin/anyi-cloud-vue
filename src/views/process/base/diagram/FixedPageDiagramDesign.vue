@@ -4,7 +4,7 @@
       @change="handleChange"
       :high-margin="254"
       @save="handleSaveOk"
-      :dataMethod="urlInfos"
+      :dataApi="apiInfo"
       ref="designer"
     />
   </PageWrapper>
@@ -46,7 +46,7 @@
   async function getOrgTree(params: any) {
     return await selectOrgTreeList(params['type']);
   }
-  const urlInfos = reactive({
+  const apiInfo = reactive({
     categoryApi: getCategoryData,
     userApi: getUserPage,
     groupApi: getGroupPage,
