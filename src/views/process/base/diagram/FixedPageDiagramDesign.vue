@@ -47,11 +47,11 @@
     return await selectOrgTreeList(params['type']);
   }
   const urlInfos = reactive({
-    categoryMeghod: getCategoryData,
-    userPageMeghod: getUserPage,
-    groupPageMeghod: getGroupPage,
-    expressionPageMeghod: getExpressionPage,
-    orgTreeMeghod: getOrgTree,
+    categoryApi: getCategoryData,
+    userApi: getUserPage,
+    groupApi: getGroupPage,
+    expressionApi: getExpressionPage,
+    orgTreeApi: getOrgTree,
   });
   function goBack() {
     closeCurrent();
