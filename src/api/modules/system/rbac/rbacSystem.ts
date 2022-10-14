@@ -56,7 +56,7 @@ export const getById = (systemId: string) =>
 export const deleteById = (systemId: string) =>
   defHttp.delete<string>(
     {
-      url: SysUrlPrefix.SYSTEM + '/rbac-system/delete-one/{orgId}',
+      url: SysUrlPrefix.SYSTEM + '/rbac-system/delete-one/{systemId}',
       params: { systemId },
     },
     { successMessageMode: 'notification' }
