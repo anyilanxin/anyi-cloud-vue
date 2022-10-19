@@ -1,5 +1,6 @@
 import { defHttp } from '/@/utils/http/axios';
 import { SysUrlPrefix } from '/@/api/sysPrefix';
+import { SelectModel } from '/@/api/model/commonModel';
 import {
   ProcessCategoryVo,
   ProcessCategoryQueryVo,
@@ -55,4 +56,12 @@ export const getList = (data: ProcessCategoryQueryVo) =>
   defHttp.post<ProcessCategoryDto[]>({
     url: SysUrlPrefix.PROCESS + '/process-category/select/list',
     data,
+  });
+
+/**
+ * @description: 查询流程类型
+ */
+export const getCategoryList = () =>
+  defHttp.get<SelectModel[]>({
+    url: SysUrlPrefix.PROCESS + '/process-category/select/category-list',
   });

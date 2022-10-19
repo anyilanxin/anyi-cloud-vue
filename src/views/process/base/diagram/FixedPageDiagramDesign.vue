@@ -16,7 +16,7 @@
   import { useTabs } from '/@/hooks/web/useTabs';
   import { useRoute, useRouter } from 'vue-router';
   import { getById, insert, update } from '/@/api/modules/process/base/designModel';
-  import { getList } from '/@/api/modules/process/base/processCategory';
+  import { getCategoryList } from '/@/api/modules/process/base/processCategory';
   import { selectPage as selectExpressionPage } from '/@/api/modules/process/base/designExpression';
   import { selectPage as selectRolePage } from '/@/api/modules/system/rbac/rbacRole';
   import { selectPage as selectUserPage } from '/@/api/modules/system/rbac/rbacUser';
@@ -31,8 +31,8 @@
   const modelId = ref(route.query?.modelId as string);
   const isCopy = ref(route.query?.isCopy as string);
   const history = ref(route.query?.history as string);
-  async function getCategoryData(params: any) {
-    return await getList(params);
+  async function getCategoryData() {
+    return await getCategoryList();
   }
   async function getUserPage(params: any) {
     return await selectUserPage(params);
