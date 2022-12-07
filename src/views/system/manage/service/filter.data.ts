@@ -24,7 +24,7 @@ export const columnJson = {
   ] as FormSchema[],
   StripPrefix: [
     {
-      field: 'StripPrefix',
+      field: 'parts',
       label: '前缀剥离',
       component: 'InputNumber',
       itemProps: {
@@ -36,7 +36,7 @@ export const columnJson = {
   ] as FormSchema[],
   PrefixPath: [
     {
-      field: 'PrefixPath',
+      field: 'prefix',
       label: '前缀追加',
       component: 'Input',
       itemProps: {
