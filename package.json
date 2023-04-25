@@ -1,9 +1,9 @@
 {
-  "name": "skill-full-cloud-vue",
+  "name": "anyi-cloud-vue",
   "version": "1.0.0-alpha2",
   "author": {
-    "name": "zxiaozhou",
-    "email": "z7630853@163.com",
+    "name": "xuanhongzhou",
+    "email": "anyilanxin@aliyun.com",
     "url": "https://github.com/zxiaozhou"
   },
   "scripts": {
@@ -126,6 +126,7 @@
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.70.2",
+    "rollup-plugin-license": "^3.0.1",
     "rollup-plugin-visualizer": "^5.6.0",
     "stylelint": "^14.7.1",
     "stylelint-config-prettier": "^9.0.3",
@@ -152,13 +153,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zxiaozhou/skillfull-cloud-vue.git"
+    "url": "git+https://github.com/anyilanxin/anyi-cloud-vue.git"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/zxiaozhou/skillfull-cloud-vue/issues"
+    "url": "https://github.com/anyilanxin/anyi-cloud-vue/issues"
   },
-  "homepage": "https://github.com/zxiaozhou/skillfull-cloud-vue",
+  "homepage": "https://github.com/anyilanxin/anyi-cloud-vue",
   "engines": {
     "node": "^12 || >=14"
   },
