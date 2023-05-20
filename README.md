@@ -1,4 +1,4 @@
-<img src="./docs/images/logo.png"  height="200" width="200">
+<img src="./docs/images/logo.png"  height="150" width="150">
 
 # AnYi Cloud Web
 
@@ -14,4 +14,4 @@ vue3、vite、antdesign vue、anyi-cloud(micro service)
 
 | QQ 群:666029437                                    |
 | -------------------------------------------------- |
-| <img src="./docs/images/qq_group.png" width="200"> |
+| <img src="./docs/images/qq_group.jpg" width="200"> |
