@@ -20,7 +20,7 @@
  *   4.分发源码时候，请注明软件出处 https://github.com/anyilanxin/anyi-cloud；
  *   5.在修改包名，模块名称，项目代码等时，请注明软件出处 https://github.com/anyilanxin/anyi-cloud；
  *   6.本软件不允许在国家法律规定范围外使用，如出现违法行为原作者本人不承担任何法律风险；
- *   7.进行商用时，不得基于AnYi Cloud Vue 的基础，修改包装而成一个与AnYi Zeebe EE、AnYi Cloud EE功能类似的程序，进行销售或发布，参与同类软件产品市场的竞争；
+ *   7.进行商用时，不得基于AnYi Cloud Vue的基础，修改包装而成一个与AnYi Zeebe EE、AnYi Cloud EE功能类似的程序，进行销售或发布，参与同类软件产品市场的竞争；
  *   8.本软件使用的第三方依赖皆为开源软件，如需要修改第三方源码请遵循第三方源码附带开源协议；
  *   9.本软件流程部分请遵循camunda开源协议：
  *     https://docs.camunda.org/manual/latest/introduction/third-party-libraries
@@ -64,23 +64,7 @@
           <div class="flex w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
             <div
               :class="`${prefixCls}-form`"
-              class="
-                relative
-                w-full
-                px-5
-                py-8
-                mx-auto
-                my-auto
-                rounded-md
-                shadow-md
-                xl:ml-16 xl:bg-transparent
-                sm:px-8
-                xl:p-4 xl:shadow-none
-                sm:w-3/4
-                lg:w-2/4
-                xl:w-auto
-                enter-x
-              "
+              class="relative w-full px-5 py-8 mx-auto my-auto rounded-md shadow-md xl:ml-16 xl:bg-transparent sm:px-8 xl:p-4 xl:shadow-none sm:w-3/4 lg:w-2/4 xl:w-auto enter-x"
             >
               <LoginForm />
               <ForgetPasswordForm />
