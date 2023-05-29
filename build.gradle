@@ -1,0 +1,51 @@
+plugins {
+    id 'idea'
+    id "java"
+    id "com.github.hierynomus.license" version "0.16.1"
+}
+
+task licenseFormatSrouce(type: com.hierynomus.gradle.license.tasks.LicenseFormat) {
+    source = fileTree(dir: "src")
+}
+licenseFormat.dependsOn licenseFormatSrouce
+
+license {
+    header = rootProject.file('gradle/wrapper/LICENSE.text')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    headerDefinitions {
+        anyiee_common {
+            firstLine = "/*"
+            endLine = " */"
+            beforeEachLine = " * "
+            firstLineDetectionPattern = "/\\*\$"
+            lastLineDetectionPattern = ".*\\*/(\\s|\\t)*\$"
+            allowBlankLines = false
+            isMultiline = true
+        }
+        anyiee_vue {
+            firstLine = "<!--"
+            endLine = " -->"
+            beforeEachLine = " * "
+            firstLineDetectionPattern = "/\\*\$"
+            lastLineDetectionPattern = ".*\\*/(\\s|\\t)*\$"
+            allowBlankLines = false
+            isMultiline = true
+        }
+    }
+    mapping {
+        vue = 'anyiee_vue'
+        ts = 'anyiee_common'
+        js = 'anyiee_common'
+    }
+    includes(["**/*.vue", "**/*.ts", "**/*.js"])
+}
+
+
+
+
+
+
+
+
+
+
