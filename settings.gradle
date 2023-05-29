@@ -1,0 +1,12 @@
+// 指定plugin下载仓库
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/central/' }
+        gradlePluginPortal()
+    }
+}
+
+
+// 项目信息
+rootProject.name = 'anyi-cloud-vue'
