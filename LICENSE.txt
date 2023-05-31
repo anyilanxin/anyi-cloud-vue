@@ -201,7 +201,7 @@
    limitations under the License.
 
 =======================================================================
-ANYI CLOUD VUE  ADDITIONAL:
+ANYI CLOUD VUE ADDITIONAL:
 
   1.请不要删除和修改根目录下的LICENSE文件；
   2.请不要删除和修改 AnYi Cloud 源码头部的版权声明；
