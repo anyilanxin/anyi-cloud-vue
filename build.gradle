@@ -10,7 +10,7 @@ task licenseFormatSrouce(type: com.hierynomus.gradle.license.tasks.LicenseFormat
 licenseFormat.dependsOn licenseFormatSrouce
 
 license {
-    header = rootProject.file('gradle/wrapper/LICENSE.text')
+    header = rootProject.file('gradle/wrapper/LICENSE.txt')
     headerDefinitions {
         anyiee_common {
             firstLine = "/*"
